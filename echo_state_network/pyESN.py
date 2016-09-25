@@ -126,6 +126,7 @@ class ESN():
         return self.leakyrate*state + (1-self.leakyrate)*(np.tanh(preactivation)
                + self.noise*(self.random_state_.rand(self.n_reservoir)-0.5))
 
+
     def _scale_inputs(self,inputs):
         """for each input dimension j: multiplies by the j'th entry in the
         input_scaling argument, then adds the j'th entry of the input_shift

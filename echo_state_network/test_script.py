@@ -3,10 +3,10 @@
 from echo_state_network import ESN
 
 #FILE = "./MackeyGlass_t17.txt"
-FILE = "./macky_glass.csv"
+FILE = "../data/macky_glass.csv"
 
 if __name__=="__main__":
-    outputfile = "./result/sparsity_test-2.csv"
+    outputfile = "../result/sparsity_test-2.csv"
     f = open(outputfile,"w")
     f.write("sparsity,mse\n")
     for sparsity in [0.999,0.995,0.99,0.95,0.9,0.5,0]:
@@ -15,6 +15,6 @@ if __name__=="__main__":
         for loop in range(20):
             mse = ESN(FILE,False,sparsity=sparsity)
             f.write("%f,%f\n"%(sparsity,mse))
-            print "sparsity: %f,mse: %f"%(sparsity,mse)
+            print("sparsity: %f,mse: %f"%(sparsity,mse))
     f.close()
     

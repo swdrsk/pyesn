@@ -21,7 +21,7 @@ def run():
                         help="display graphs or not")
     args = parser.parse_args()
     mse = ESN(args.filename,args.display,sparsity=0.1)
-    print mse
+    print(mse)
 
 def ESN(filename,display=True,sparsity=0,variant=1):
     trainLen = 2000
@@ -120,10 +120,10 @@ def ESN(filename,display=True,sparsity=0,variant=1):
             #plt.title("attractor plot")
             #plt.plot(X[])
         except Exception as e:
-            print "Error as: "+str(e)
+            print("Error as: "+str(e))
 
-        print MemoryCapacity(data[trainLen+1:trainLen+testLen+1],Y.T)
-        print mse
+        print(MemoryCapacity(data[trainLen+1:trainLen+testLen+1],Y.T))
+        print(mse)
         plt.show()
 
     return mse

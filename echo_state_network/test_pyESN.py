@@ -14,7 +14,7 @@ def run1():
     f.write("sparsity,mse,spectro_mse\n")
     for i in [0,0.001,0.005,0.007,0.009,0.01,0.05,0.1,0.5,0.9,0.95,0.99]:
         for step in range(20):
-            print "==============sparsity:%f===================="%i
+            print("==============sparsity:%f===================="%i)
             mse,s_mse = test_pyESN(sparsity=i)
             f.write("%f,%f,%f\n"%(i,mse,s_mse))
     f.close()
@@ -97,14 +97,14 @@ def test_pyESN(drawflag=False,sparsity=0.8):
 
     pred_train = esn.fit(train_ctrl,train_output,inspect=False)
 
-    print "test error:"
+    print("test error:")
     pred_test = esn.predict(test_ctrl)
     mse = np.sqrt(np.mean((pred_test - test_output)**2))
-    print mse
+    print(mse)
     
     s_mse = evaluate_spectrogram(pred_test.flatten(),test_output.flatten())
-    print "test spectrogram error:"
-    print s_mse
+    print("test spectrogram error:")
+    print(s_mse)
 
 
     if drawflag:

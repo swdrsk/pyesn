@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 nums = 400
-datadir = "./data/"
+datadir = "../data/"
 
 def circle_function(x):
     a = [0.5,0.5]
@@ -111,21 +111,21 @@ def multiple_input(filename="multiple_input.txt",display=False):
         z = z + 2 * np.pi / periods[i]
         frequency_output[i] = (np.sin(z) + 1)/2
     return np.hstack([np.ones((N,1)),1-frequency_control]),frequency_output
-    """
-    N = 15000
-    t = np.array(range(N))
-    in1 = 
-    in2 = 
-    
-    datadir = "./data/"
-    filename = datadir+filename
-    f = open(filename,"w")
-    """
+    # """
+    # N = 15000
+    # t = np.array(range(N))
+    # in1 =
+    # in2 =
+    #
+    # datadir = "./data/"
+    # filename = datadir+filename
+    # f = open(filename,"w")
+    # """
     
          
 def MemoryCapacity(A,B,k=10):
     if len(A)!=len(B):
-        print "MC error"
+        print("MC error")
         return 0
     meanA,meanB = A.mean(),B.mean()
     varA,varB = A.var(),B.var()

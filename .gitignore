@@ -4,3 +4,9 @@ data/
 #result folder
 result/
 
+#test code
+echo_state_network/testcode.py
+
+#ignore pyc
+*.pyc
+*~
