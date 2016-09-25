@@ -1,9 +1,7 @@
-import brian
 import matplotlib.pyplot as plt
 import numpy as np
 
-from brian import *
-from brian.hears import *
+from brian2 import *
 from numpy.random import randn
 from numpy.linalg import norm
 
@@ -57,14 +55,65 @@ def echo_state_neuron(input):
         output.append(m)
     return output
 
+
+def LIFensembles():
+    exneuron = 800
+    inneuron = 100
+    duration = 0.1 * second
+
+    taum = 30 * ms
+    taue = 5 * ms
+    taui = 10 * ms
+    Vt = -50 * mV # threshold
+    Vr = -60 * mV # reset
+    El = -49 * mV #
+
+    eqs = '''
+    dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
+    dge/dt = -ge/taue : volt
+    dgi/dt = -gi/taui : volt
+    '''
+
+    P = NeuronGroup(exneuron+inneuron, eqs, threshold='v>Vt', reset='v = Vr', refractory=5 * ms,
+                    method='linear')
+    P.v = 'Vr + rand() * (Vt - Vr)'
+    P.ge = 0 * mV
+    P.gi = 0 * mV
+
+    we = (60 * 0.27 / 10) * mV  # excitatory synaptic weight (voltage)
+    wi = (-20 * 4.5 / 10) * mV  # inhibitory synaptic weight
+    Ce = Synapses(P, P, on_pre='ge += we')
+    Ci = Synapses(P, P, on_pre='gi += wi')
+    Ce.connect('i<exneuron', p=0.02)
+    Ci.connect('i>=exneuron', p=0.02)
+
+    s_mon = SpikeMonitor(P)
+    p_mon = PopulationRateMonitor(P)
+
+    run(duration)
+
+    subplot(211)
+    plot(s_mon.t / ms, s_mon.i, '.k')
+    xlabel('Time (ms)')
+    ylabel('Neuron index')
+
+    subplot(212)
+    plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=0.5*ms)/Hz)
+    xlabel("Time (ms)")
+    ylabel("Rate [Hz]")
+
+    show()
+
+
 def draw_output(output):
-    plt.plot(range(len(output)),output)
+    plt.plot(range(len(output)), output)
     plt.xlabel("Time")
     plt.ylabel("output")
     plt.show()
 
+
 if __name__=="__main__":
     #input = np.sin(np.array(range(3000))*0.01)
     input = [0 for i in range(100)] + [1 for i in range(200)] + [0 for i in range(100)] + [1 for i in range(200)]
-    output = echo_state_neuron(input)
-    draw_output(output)
+    #output = echo_state_neuron(input)
+    LIFensembles()

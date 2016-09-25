@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import argparse
 
-datadir = "./data/"
+datadir = "../data/"
 #FILE = "macky_glass.csv"
 #FILE = datadir+"sinwave.txt"
 FILE = datadir+"longshortwave3.txt"
