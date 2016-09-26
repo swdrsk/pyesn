@@ -56,7 +56,7 @@ def echo_state_neuron(input):
     return output
 
 
-def LIFensembles():
+def LIFensembles(input):
     exneuron = 800
     inneuron = 100
     duration = 0.1 * second
@@ -67,6 +67,10 @@ def LIFensembles():
     Vt = -50 * mV # threshold
     Vr = -60 * mV # reset
     El = -49 * mV #
+
+    dt = 0.005
+    input = input * 30 # Hz
+    input = input*(exneuron + inneuron)*dt #
 
     eqs = '''
     dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
@@ -98,9 +102,9 @@ def LIFensembles():
     ylabel('Neuron index')
 
     subplot(212)
-    plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=0.5*ms)/Hz)
+    plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz)
     xlabel("Time (ms)")
-    ylabel("Rate [Hz]")
+    ylabel("Rate")
 
     show()
 
