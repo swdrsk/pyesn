@@ -56,7 +56,7 @@ def echo_state_neuron(input):
     return output
 
 
-def LIFensembles(input):
+def LIFensembles(input_flag = True):
     exneuron = 800
     inneuron = 100
     duration = 0.1 * second
@@ -67,10 +67,6 @@ def LIFensembles(input):
     Vt = -50 * mV # threshold
     Vr = -60 * mV # reset
     El = -49 * mV #
-
-    dt = 0.005
-    input = input * 30 # Hz
-    input = input*(exneuron + inneuron)*dt #
 
     eqs = '''
     dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
@@ -94,17 +90,44 @@ def LIFensembles(input):
     s_mon = SpikeMonitor(P)
     p_mon = PopulationRateMonitor(P)
 
+    if input_flag:
+        Pg = PoissonGroup(exneuron,25*Hz)
+        # ta = TimedArray(values=[0,1,0,1,0], dt=duration/5)
+        # Pg = NeuronGroup(exneuron, 'vi = ta(t) : 1', threshold='vi>0.5', reset='vi=0',refractory=5*ms)
+        weg = (60 * 0.27 / 10) * mV
+        Ceg = Synapses(Pg, P, on_pre='ge += we')
+        Ceg.connect('i<exneuron', p=0.02)
+        pp_mon = PopulationRateMonitor(Pg)
+
+
     run(duration)
 
-    subplot(211)
-    plot(s_mon.t / ms, s_mon.i, '.k')
-    xlabel('Time (ms)')
-    ylabel('Neuron index')
-
-    subplot(212)
-    plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz)
-    xlabel("Time (ms)")
-    ylabel("Rate")
+    if input_flag:
+        subplot(311)
+        plot(s_mon.t / ms, s_mon.i, '.k')
+        xlabel('Time (ms)')
+        ylabel('Neuron index')
+        subplot(312)
+        plot(pp_mon.t/ms, pp_mon.smooth_rate(window='gaussian', width=5*ms)/Hz)
+        xlabel('Time (ms)')
+        ylabel('Input Rate [Hz]')
+        subplot(313)
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='5ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz, label='20ms')
+        xlabel("Time (ms)")
+        ylabel('Output Rate [Hz]')
+    else:
+        subplot(211)
+        plot(s_mon.t / ms, s_mon.i, '.k')
+        xlabel('Time (ms)')
+        ylabel('Neuron index')
+        subplot(212)
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='5ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz, label='20ms')
+        xlabel("Time (ms)")
+        ylabel('Output Rate [Hz]')
 
     show()
 
@@ -115,9 +138,13 @@ def draw_output(output):
     plt.ylabel("output")
     plt.show()
 
+def draw_attractor(output):
+    plt.plot(output[:-1],output[1:])
+    plt.show()
 
 if __name__=="__main__":
-    #input = np.sin(np.array(range(3000))*0.01)
-    input = [0 for i in range(100)] + [1 for i in range(200)] + [0 for i in range(100)] + [1 for i in range(200)]
+    input = np.sin(np.array(range(3000))*0.01)
+    #input = [0 for i in range(100)] + [1 for i in range(200)] + [0 for i in range(100)] + [1 for i in range(200)]
     #output = echo_state_neuron(input)
+    #draw_attractor(output)
     LIFensembles()
