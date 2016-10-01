@@ -4,15 +4,28 @@ create data
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import argparse
 
-nums = 400
+import pdb
+
 datadir = "../data/"
+
+
+def _run():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d','--display',default=False,action='store_true')
+    parser.add_argument('-n','--nums',default=15000)
+    args = parser.parse_args()
+    control_sinwave(display=args.display,num=args.nums)
+
 
 def circle_function(x):
     a = [0.5,0.5]
     r = 0.25
     y = 1 if np.linalg.norm(x-a)>r else 0
     return y
+
 
 def create_data(filename = "circle.csv"):
     f = open(filename,"w")
@@ -22,8 +35,10 @@ def create_data(filename = "circle.csv"):
         y = circle_function(x)
         f.write("%f,%f,%d\n"%(x[0],x[1],y))
     f.close()
-def Macky_glass(tau=20,filename = "macky_glass.csv",display=False):
-    N = 15000 #N must bigger than 100
+
+
+def Macky_glass(num,filename = "macky_glass.csv",display=False):
+    N = num #N must bigger than 100
     b = 0.1
     c = 0.2
     n_= 10
@@ -49,79 +64,77 @@ def Macky_glass(tau=20,filename = "macky_glass.csv",display=False):
         plt.plot(y[100:N+tau-1],y[101:N+tau])        
         plt.show()   
 
-def long_short_wave(filename="longshortwave5.txt",display=False):
-    N = 15000
+
+def long_short_wave(num,filename="longshortwave5.txt",display=False):
+    N = num
     pi = np.pi
     t = np.array(range(N))
     l = np.sin(t*2*pi/200)
     s = np.sin(t*2*pi/50)
     res = l + s*0.3
 
-    datadir = "./data/"
     filename = datadir+filename
     f = open(filename,"w")
     f.write("output\n")
-    for i in res:
+    for i in list(res):
         f.write("%f\n"%i)
     f.close()
-    
+
     if display:
         plt.figure()
-        plt.plot(range(1000),res[0:1000])
+        plt.plot(range(1000),res[:1000])
         plt.show()
 
 
-def sinwave(filename="sinwave.txt",display=False):
-    N = 15000
+def sinwave(num,filename="sinwave.txt",display=False):
+    N = num
     pi = np.pi
     t = np.array(range(N))
     res = np.sin(t*2*pi/200)
 
-    datadir = "./data/"
     filename = datadir+filename
     f = open(filename,"w")
     f.write("output\n")
     for i in res:
         f.write("%f\n"%i)
     f.close()
-    
     if display:
         plt.figure()
-        plt.plot(range(1000),res[0:1000])
+        plt.plot(range(1000),res[:1000])
         plt.show()
 
-    
-def multiple_input(filename="multiple_input.txt",display=False):
+
+def control_sinwave(num,filename="control_sinwave.txt",display=False):
     """returns a random step function with N changepoints
        and a sine wave signal that changes its frequency at
        each such step, in the limits given by min_ and max_period."""
-    # vector of random indices < N, padded with 0 and N at the ends:
-    changepoints = np.insert(np.sort(rng.randint(0,N,n_changepoints)),[0,n_changepoints],[0,N]) 
-    # list of interval boundaries between which the control sequence should be constant:
+    filename = datadir + filename
+    N = num
+    min_period = 10
+    max_period = 30
+    n_changepoints = N/200
+    rng = np.random.RandomState(42)
+
+    changepoints = np.insert(np.sort(rng.randint(0,N,n_changepoints)),[0,n_changepoints],[0,N])
     const_intervals = zip(changepoints,np.roll(changepoints,-1))[:-1]
-    # populate a control sequence
     frequency_control = np.zeros((N,1))
     for (t0,t1) in const_intervals:
         frequency_control[t0:t1] = rng.rand()
     periods = frequency_control * (max_period - min_period) + max_period
-    # run time through a sine, while changing the period length
     frequency_output = np.zeros((N,1))
     z = 0
     for i in range(N):
         z = z + 2 * np.pi / periods[i]
         frequency_output[i] = (np.sin(z) + 1)/2
-    return np.hstack([np.ones((N,1)),1-frequency_control]),frequency_output
-    # """
-    # N = 15000
-    # t = np.array(range(N))
-    # in1 =
-    # in2 =
-    #
-    # datadir = "./data/"
-    # filename = datadir+filename
-    # f = open(filename,"w")
-    # """
-    
+    input,output =  map(lambda x:x[0],frequency_control),map(lambda x:x[0],frequency_output)
+    pd.DataFrame(zip(input,output),columns=['input','output']).to_csv(filename,index=False)
+    if display:
+        display_range = 1000
+        plt.figure(figsize =(12,1.5))
+        plt.plot(range(display_range),input[:display_range])
+        plt.plot(range(display_range),output[:display_range]) # output[:display_range]ではうまくいかない。なぜ？
+        plt.show()
+
          
 def MemoryCapacity(A,B,k=10):
     if len(A)!=len(B):
@@ -135,8 +148,4 @@ def MemoryCapacity(A,B,k=10):
     
         
 if __name__=="__main__":
-    #create_data()
-    #Macky_glass(display=False)
-    #long_short_wave(display=False)
-    #multiple_input(display=True)
-    sinwave(display=True)
+    _run()

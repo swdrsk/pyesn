@@ -250,7 +250,3 @@ class ESN():
 
         return self._unscale_teacher(self.out_activation(outputs[1:]))
 
-    def inner_check(self):
-        if check_num==0:
-            return
-        
