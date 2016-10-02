@@ -32,12 +32,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tools.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/tools.py">
+      <file leaf-file-name="generate_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/generate_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="17">
+              <caret line="90" column="14" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="14" />
+              <folding>
+                <element signature="e#34#52#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,22 +59,10 @@
       <file leaf-file-name="run_pyESN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="334">
+              <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generate_data.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/generate_data.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#34#52#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,19 +71,11 @@
       <file leaf-file-name="pyESN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2567">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="brian2_sample.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/brian2_sample.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="99" column="18" selection-start-line="99" selection-start-column="18" selection-end-line="99" selection-end-column="18" />
-              <folding />
+            <state relative-caret-position="170">
+              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,8 +100,8 @@
         <option value="$PROJECT_DIR$/tools/tools.py" />
         <option value="$PROJECT_DIR$/ensemble_neurons.py" />
         <option value="$PROJECT_DIR$/../data/parmeter.csv" />
-        <option value="$PROJECT_DIR$/pyESN.py" />
         <option value="$PROJECT_DIR$/generate_data.py" />
+        <option value="$PROJECT_DIR$/pyESN.py" />
         <option value="$PROJECT_DIR$/run_pyESN.py" />
       </list>
     </option>
@@ -371,7 +353,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="31" column="57" selection-start-line="28" selection-start-column="23" selection-end-line="33" selection-end-column="46" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -412,7 +396,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2788">
           <caret line="164" column="14" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -445,7 +431,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2788">
           <caret line="164" column="14" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -475,7 +463,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -557,7 +547,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="127" column="65" selection-start-line="127" selection-start-column="65" selection-end-line="127" selection-end-column="65" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -582,7 +574,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2788">
           <caret line="164" column="14" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -615,7 +609,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2788">
           <caret line="164" column="14" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -645,7 +641,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -736,28 +734,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyESN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2567">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generate_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="17">
+          <caret line="90" column="14" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="14" />
           <folding>
             <element signature="e#34#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pyESN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run_pyESN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="334">
+          <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
