@@ -14,11 +14,26 @@ datadir = "../data/"
 
 def _run():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--filename',default=None)
     parser.add_argument('-d','--display',default=False,action='store_true')
     parser.add_argument('-n','--nums',default=15000)
+    parser.add_argument('-func','--function',
+                        help=''' function name option :
+                        control_sinwave, mackyglass, sinwave, long_short_wave
+                        ''')
     args = parser.parse_args()
-    control_sinwave(display=args.display,num=args.nums)
-
+    if args.filename:
+        params = {'filename':args.filename,'num':args.nums,'display':args.display}
+    else:
+        params = {'num':args.nums,'display':args.display}
+    if args.function=='control_sinwave':
+        control_sinwave(**params)
+    elif args.function=="mackyglass":
+        Macky_glass(**params)
+    elif args.function=='sinwave':
+        sinwave(**params)
+    elif args.function=='long_short_wave':
+        long_short_wave(**params)
 
 def circle_function(x):
     a = [0.5,0.5]
@@ -110,8 +125,8 @@ def control_sinwave(num,filename="control_sinwave.txt",display=False):
        each such step, in the limits given by min_ and max_period."""
     filename = datadir + filename
     N = num
-    min_period = 10
-    max_period = 30
+    min_period = 2
+    max_period = 10
     n_changepoints = N/200
     rng = np.random.RandomState(42)
 

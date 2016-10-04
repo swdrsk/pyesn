@@ -1,4 +1,5 @@
 #data folder
+params/
 data/
 
 #result folder
@@ -12,4 +13,4 @@ echo_state_network/testcode.py
 *~
 
 #ignore .idea folder
-echo_state_network/.idea/*
+echo_state_network/.idea/

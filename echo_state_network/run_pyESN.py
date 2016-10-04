@@ -9,6 +9,7 @@ import pdb
 
 datadir = "../data/"
 resultdir = "../result/"
+paramdir = "../params/"
 rng = np.random.RandomState(42)
 
 
@@ -22,7 +23,7 @@ def run():
     args = parser.parse_args()
     inputfile = datadir + args.inputfile
     outputfile = resultdir + args.outputfile
-    parameter = datadir + args.parameter
+    parameter = paramdir + args.parameter
     drawflag = args.drawflag
     run_pyESN(inputfile,outputfile,parameter,drawflag)
 
@@ -69,7 +70,6 @@ def run_pyESN(inputfile,outputfile,parameter,drawflag=False):
     esn = ESN(**params)
     pred_train = esn.fit(train_ctrl,train_output)
     pred_test = esn.predict(test_ctrl)
-
     #pd.DataFrame(pred_test).to_csv(outputfile)
 
     if drawflag:
