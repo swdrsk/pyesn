@@ -132,6 +132,37 @@ def LIFensembles(input_flag = True):
     show()
 
 
+def LIFsingle():
+    taum = 30 # ms
+    taue = 5 # ms
+    taui = 10 # ms
+    Vt = -50 # mV # threshold
+    Vr = -60 # mV # reset
+    El = -49 # mV #
+
+    runtime = 1000 #ms
+    step = 0.05 #ms
+    timestep = runtime*1.0/step
+
+    for t in range(timestep):
+        deltav = step*(ge[t]-(v-El))/taum
+
+    eqs = '''
+    dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
+    dge/dt = -ge/taue : volt
+    dgi/dt = -gi/taui : volt
+    '''
+
+    P = NeuronGroup(1, eqs, threshold='v>Vt', reset='v = Vr', refractory=5 * ms,
+                    method='linear')
+
+
+def input_firing_rate2descrete_spike(input,neuron_num):
+    spikes = np.zeros(len(input),neuron_num)
+
+    return spikes
+
+
 def draw_output(output):
     plt.plot(range(len(output)), output)
     plt.xlabel("Time")
