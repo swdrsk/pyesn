@@ -21,7 +21,7 @@ def generate_paramfile(filename,
     f.close()
     
 
-if __name__=="__main__":
+def run():
     parser = argparse.ArgumentParser()
     parser.add_argument("-f","--filename",default="parameter.csv")
     parser.add_argument('-in','--n_inputs',default=1)
@@ -35,3 +35,21 @@ if __name__=="__main__":
                        n_reservoir=args.n_reservoir,
                        leakyrate=args.leakyrate)
     
+
+def run_all():
+    n_reservoir = [300, 500, 1000, 1500, 2000]
+    leakyrate = [0.2, 0.25, 0.3, 0.35]
+    n_in = [0,1]
+
+    for i in n_in:
+        for l in leakyrate:
+            for r in n_reservoir:
+                filename = str(i)+str(1)+"_"+str(r)+'_p'+str(l*100)+".csv"
+                generate_paramfile(filename=filename,
+                                   n_inputs=i,
+                                   n_outputs=1,
+                                   n_reservoir=r,
+                                   leakyrate=l)
+
+if __name__=="__main__":
+    run()

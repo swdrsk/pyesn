@@ -130,7 +130,7 @@ def control_sinwave(num,filename="control_sinwave.txt",display=False):
         z = z + 2 * np.pi / periods[i]
         frequency_output[i] = (np.sin(z) + 1)/2
     input,output =  map(lambda x:x[0],frequency_control),map(lambda x:x[0],frequency_output)
-    pd.DataFrame(zip(input,output),columns=['input','output']).to_csv(filename,index=False)
+    pd.DataFrame(zip(output,input),columns=['input','output']).to_csv(filename,index=False)
     if display:
         display_range = 1000
         plt.figure(figsize =(12,1.5))
