@@ -13,14 +13,15 @@ datadir = "../data/"
 
 
 def _run():
+    function_option = [
+        'control_sinwave', 'mackyglass', 'sinwave', 'long_short_wave'
+    ]
     parser = argparse.ArgumentParser()
     parser.add_argument('-f','--filename',default=None)
     parser.add_argument('-d','--display',default=False,action='store_true')
-    parser.add_argument('-n','--nums',default=15000)
+    parser.add_argument('-n','--nums',default=15000,type=int)
     parser.add_argument('-func','--function',
-                        help=''' function name option :
-                        control_sinwave, mackyglass, sinwave, long_short_wave
-                        ''')
+                        help=' function name option : %s'%(', '.join(function_option)))
     args = parser.parse_args()
     if args.filename:
         params = {'filename':args.filename,'num':args.nums,'display':args.display}
@@ -34,22 +35,8 @@ def _run():
         sinwave(**params)
     elif args.function=='long_short_wave':
         long_short_wave(**params)
-
-def circle_function(x):
-    a = [0.5,0.5]
-    r = 0.25
-    y = 1 if np.linalg.norm(x-a)>r else 0
-    return y
-
-
-def create_data(filename = "circle.csv"):
-    f = open(filename,"w")
-    f.write("x1,x2,y\n")
-    for i in range(nums):
-        x = np.random.rand(2)
-        y = circle_function(x)
-        f.write("%f,%f,%d\n"%(x[0],x[1],y))
-    f.close()
+    else:
+        print('input correct option as -func [%s]'%(', '.join(function_option)))
 
 
 def Macky_glass(num,filename = "macky_glass.csv",display=False):
@@ -59,7 +46,7 @@ def Macky_glass(num,filename = "macky_glass.csv",display=False):
     n_= 10
     tau = 17
     
-    f = open(filename,"w")
+    f = open(datadir + filename,"w")
     f.write("output\n")
 
     y = np.zeros(N+tau+100)

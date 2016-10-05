@@ -157,9 +157,16 @@ def LIFsingle():
                     method='linear')
 
 
-def input_firing_rate2descrete_spike(input,neuron_num):
-    spikes = np.zeros(len(input),neuron_num)
-
+def input_firing_rate2discrete_spike(input_rate,neuron_num=1):
+    def poisson_spike(rate):
+        ''' rate [Hz] return period [0.05*ms]'''
+        prob = rate*5./10000
+        return 1 if np.random.random() < prob else 0
+    step = 0.05 #ms
+    spikes = map(lambda x:poisson_spike(x), input_rate)
+    if neuron_num > 1:
+        for i in xrange(neuron_num):
+            spikes.append(map(lambda x:poisson_spike(x), input_rate))
     return spikes
 
 
@@ -178,4 +185,10 @@ if __name__=="__main__":
     #input = [0 for i in range(100)] + [1 for i in range(200)] + [0 for i in range(100)] + [1 for i in range(200)]
     #output = echo_state_neuron(input)
     #draw_attractor(output)
-    LIFensembles()
+    _input = (np.sin(np.array(range(20000))*0.001) + 1.1 ) * 10
+    spikes = input_firing_rate2discrete_spike(_input,1)
+    plt.subplot(211)
+    plt.plot(range(len(_input)),_input)
+    plt.subplot(212)
+    plt.plot(range(len(spikes)), spikes)
+    plt.show()
