@@ -36,6 +36,10 @@ def run():
     drawflag = args.drawflag
     if not os.access(outputfolder, os.F_OK):
         os.mkdir(resultdir+outputfolder)
+    f = open(outputfolder+'log.txt', 'w')
+    f.write(args.inputfile)
+    f.write(args.parameter)
+    f.close()
     run_pyESN(inputfile,outputfolder,parameter,drawflag)
 
 
@@ -47,7 +51,7 @@ def load_parameter(filename):
     return param_dict
 
 
-def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
+def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     inputdata = pd.read_csv(inputfile)
     params = load_parameter(parameter)
     N = inputdata.shape[0]
@@ -67,6 +71,9 @@ def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
         else:
             train_ctrl = np.vstack([train_ctrl,np.array(inputdata[key][:traintest_cutoff])])
             test_ctrl = np.vstack([test_ctrl, np.array(inputdata[key][traintest_cutoff:])])
+    else:
+        train_ctrl = np.ones(traintest_cutoff)
+        test_ctrl = np.ones(N-traintest_cutoff)
     for key in inputdata.keys()[n_input:]:
         if not train_output:
             train_output = np.array(inputdata[key][:traintest_cutoff])
@@ -74,9 +81,9 @@ def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
         else:
             train_output = np.vstack([train_output,np.array(inputdata[key][:traintest_cutoff])])
             test_output = np.vstack([test_output, np.array(inputdata[key][traintest_cutoff:])])
-
-    #train_ctrl,train_output = control[:traintest_cutoff],output[:traintest_cutoff]
-    #test_ctrl, test_output  = control[traintest_cutoff:],output[traintest_cutoff:]
+    else:
+        train_output = np.ones(traintest_cutoff)
+        test_output = np.ones(N-traintest_cutoff)
 
     esn = ESN(**params)
     pred_train = esn.fit(train_ctrl,train_output)
@@ -85,6 +92,7 @@ def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
 
     if drawflag:
         window_tr = range(len(train_output)/4,len(train_output)/4+2000)
+        plt.figure(figsize=(12, 4))
         plt.subplot(211)
         plt.plot(train_ctrl[window_tr],label='control')
         plt.plot(train_output[window_tr],label='target')
@@ -92,8 +100,7 @@ def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
         plt.legend(fontsize='x-small')
         plt.title('training (excerpt)')
         plt.ylim([-0.1,1.1])
-        
-        window_test = range(400)
+        window_test = range(800)
         plt.subplot(212)
         plt.plot(test_ctrl[window_test],label='control')
         plt.plot(test_output[window_test],label='target')
@@ -101,8 +108,9 @@ def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
         plt.legend(fontsize='x-small')
         plt.title('test (excerpt)')
         plt.ylim([-0.1,1.1])
-
         plt.show()
+
+
 
 if __name__=="__main__":
     run()

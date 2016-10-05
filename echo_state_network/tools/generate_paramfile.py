@@ -44,7 +44,7 @@ def run_all():
     for i in n_in:
         for l in leakyrate:
             for r in n_reservoir:
-                filename = str(i)+str(1)+"_"+str(r)+'_p'+str(l*100)+".csv"
+                filename = str(i)+str(1)+"_"+str(r)+'_p'+str(int(l*100))+".csv"
                 generate_paramfile(filename=filename,
                                    n_inputs=i,
                                    n_outputs=1,

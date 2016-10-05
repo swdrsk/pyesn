@@ -5,24 +5,24 @@ import pandas as pd
 import argparse
 
 datadir = "../data/"
-#FILE = "macky_glass.csv"
+FILE = datadir+"macky_glass.csv"
 #FILE = datadir+"sinwave.txt"
-FILE = datadir+"longshortwave3.txt"
+#FILE = datadir+"longshortwave3.txt"
 #data = np.load('mackey_glass_t17.npy') #  http://minds.jacobs-university.de/mantas/code
 data = pd.read_csv(FILE)["output"]
 data = np.array(data)
 
 esn = ESN(n_inputs = 1,
           n_outputs = 1,
-          leakyrate = 0.01,
+          leakyrate = 0.2,
           sparsity = 0.001,
           n_reservoir = 300,
-          spectral_radius = 1.5,
+          spectral_radius = 0.95,
           random_state=42)
 
 trainlen = 2000
 future = 2000
-pred_training = esn.fit(np.ones(trainlen),data[:trainlen])
+pred_training = esn.fit(np.ones(trainlen), data[:trainlen])
 
 prediction = esn.predict(np.ones(future))
 print("test error: \n"+str(np.sqrt(np.mean((prediction.flatten() - data[trainlen:trainlen+future])**2))))
