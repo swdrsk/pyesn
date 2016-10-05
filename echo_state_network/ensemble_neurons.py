@@ -132,37 +132,46 @@ def LIFensembles(input_flag = True):
     show()
 
 
-def LIFsingle():
-    taum = 30 # ms
-    taue = 5 # ms
-    taui = 10 # ms
-    Vt = -50 # mV # threshold
-    Vr = -60 # mV # reset
-    El = -49 # mV #
+def LIFsingle(input):
+    duration = 1 * second
 
-    runtime = 1000 #ms
-    step = 0.05 #ms
-    timestep = runtime*1.0/step
-
-    for t in range(timestep):
-        deltav = step*(ge[t]-(v-El))/taum
+    taum = 30 * ms
+    taue = 5 * ms
+    taui = 10 * ms
+    Vt = -50 * mV # threshold
+    Vr = -60 * mV # reset
+    El = -49 * mV #
+    weg = (60 * 0.27 / 10) * mV
+    stimuli = TimedArray(np.array(input)*100*weg, dt=0.1*ms)
 
     eqs = '''
-    dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
+    dv/dt  = (ge+gi+stimuli(t)-(v-El))/taum : volt (unless refractory)
     dge/dt = -ge/taue : volt
     dgi/dt = -gi/taui : volt
     '''
-
     P = NeuronGroup(1, eqs, threshold='v>Vt', reset='v = Vr', refractory=5 * ms,
                     method='linear')
+    P.v = 'Vr'
+    P.ge,P.gi = 0 * mV,0 * mV
+    s_mon = StateMonitor(P,'v',record=True)
+    p_mon = PopulationRateMonitor(P)
+    run(duration)
+
+    subplot(211)
+    plot(s_mon.t/ms,s_mon.v[0]/mV)
+    subplot(212)
+    plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='5ms')
+    xlabel('Time (ms)')
+    ylabel('Output Firing Rate [Hz]')
+
+    show()
 
 
 def input_firing_rate2discrete_spike(input_rate,neuron_num=1):
     def poisson_spike(rate):
-        ''' rate [Hz] return period [0.05*ms]'''
-        prob = rate*5./10000
+        ''' rate [Hz] return period [0.1*ms]'''
+        prob = rate*1./10000
         return 1 if np.random.random() < prob else 0
-    step = 0.05 #ms
     spikes = map(lambda x:poisson_spike(x), input_rate)
     if neuron_num > 1:
         for i in xrange(neuron_num):
@@ -185,10 +194,11 @@ if __name__=="__main__":
     #input = [0 for i in range(100)] + [1 for i in range(200)] + [0 for i in range(100)] + [1 for i in range(200)]
     #output = echo_state_neuron(input)
     #draw_attractor(output)
-    _input = (np.sin(np.array(range(20000))*0.001) + 1.1 ) * 10
+    _input = (np.sin(np.array(range(10000))*0.01) + 1.1 ) * 10
     spikes = input_firing_rate2discrete_spike(_input,1)
-    plt.subplot(211)
-    plt.plot(range(len(_input)),_input)
-    plt.subplot(212)
-    plt.plot(range(len(spikes)), spikes)
-    plt.show()
+    # plt.subplot(211)
+    # plt.plot(range(len(_input)),_input)
+    # plt.subplot(212)
+    # plt.plot(range(len(spikes)), spikes)
+    # plt.show()
+    LIFensembles(spikes)
