@@ -11,6 +11,7 @@ echo_state_network/testcode.py
 #ignore pyc
 *.pyc
 *~
+*.xml
 
 #ignore .idea folder
-echo_state_network/.idea/
+.idea/
