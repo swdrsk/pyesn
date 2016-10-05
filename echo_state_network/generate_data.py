@@ -10,6 +10,7 @@ import argparse
 import pdb
 
 datadir = "../data/"
+paramdir = "../params/"
 
 
 def _run():
@@ -137,7 +138,7 @@ def control_sinwave(num,filename="control_sinwave.txt",display=False):
         plt.plot(range(display_range),output[:display_range]) # output[:display_range]ではうまくいかない。なぜ？
         plt.show()
 
-         
+        
 def MemoryCapacity(A,B,k=10):
     if len(A)!=len(B):
         print("MC error")

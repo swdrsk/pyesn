@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pyESN import ESN
 import argparse
-import sys
+import sys,os
 
 import pdb
 
@@ -14,18 +14,29 @@ rng = np.random.RandomState(42)
 
 
 def run():
-    usage = 'Usage: python [--verbose] [--cat <file>] [--help]'.format(__file__)
-    parser = argparse.ArgumentParser(usage=usage)
-    parser.add_argument('-if','--inputfile')
-    parser.add_argument('-of','--outputfile')
-    parser.add_argument('-p','--parameter')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-if','--inputfile',help='all [view all exist file]')
+    parser.add_argument('-of','--outputfolder')
+    parser.add_argument('-p','--parameter',help='all [view all exist file]')
     parser.add_argument('-d','--drawflag',default=False,action='store_true')
     args = parser.parse_args()
+    if args.inputfile=="all":
+        for _,__,filenames in os.walk(datadir):
+            for i in filenames:
+                print(i)
+        sys.exit()
+    if args.parameter=="all":
+        for _,__,filenames in  os.walk(paramdir):
+            for i in filenames:
+                print(i)
+        sys.exit()
     inputfile = datadir + args.inputfile
-    outputfile = resultdir + args.outputfile
+    outputfolder = resultdir + args.outputfolder
     parameter = paramdir + args.parameter
     drawflag = args.drawflag
-    run_pyESN(inputfile,outputfile,parameter,drawflag)
+    if not os.access(outputfolder, os.F_OK):
+        os.mkdir(resultdir+outputfolder)
+    run_pyESN(inputfile,outputfolder,parameter,drawflag)
 
 
 def load_parameter(filename):
@@ -36,7 +47,7 @@ def load_parameter(filename):
     return param_dict
 
 
-def run_pyESN(inputfile,outputfile,parameter,drawflag=False):
+def run_pyESN(inputfile,outputfolder,parameter,drawflag=False):
     inputdata = pd.read_csv(inputfile)
     params = load_parameter(parameter)
     N = inputdata.shape[0]
