@@ -22,9 +22,9 @@ esn = ESN(n_inputs = 1,
 
 trainlen = 2000
 future = 2000
-pred_training = esn.fit(np.ones(trainlen), data[:trainlen])
+pred_training = esn.fit(np.zeros(trainlen), data[:trainlen])
 
-prediction = esn.predict(np.ones(future))
+prediction = esn.predict(np.zeros(future))
 print("test error: \n"+str(np.sqrt(np.mean((prediction.flatten() - data[trainlen:trainlen+future])**2))))
 
 plt.figure(figsize=(11,1.5))

@@ -29,7 +29,7 @@ def correct_dimensions(s,targetlength):
 class ESN():
     def __init__(self, n_inputs, n_outputs, n_reservoir=200, leakyrate=0.2,
                  spectral_radius=0.95, sparsity=0, varidity=1, noise=0.001,input_shift=None,
-                 input_scaling=None, teacher_forcing=True,feedback_scaling=None,
+                 input_scaling=None, teacher_forcing=True, feedback_scaling=None,
                  teacher_scaling=None, teacher_shift=None,
                  out_activation=lambda x:x, inverse_out_activation=lambda x:x,
                  random_state=None,silent=True):
@@ -214,7 +214,6 @@ class ESN():
         if not self.silent: print(np.sqrt(np.mean((pred_train - outputs)**2)))
         return pred_train
 
-
     def predict(self,inputs,continuation=True):
         """
         Apply the learned weights to the network's reactions to new input.
@@ -247,7 +246,6 @@ class ESN():
             states[n+1,:] = self._update(states[n,:],inputs[n+1,:],outputs[n,:])
             outputs[n+1,:] = self.out_activation(np.dot(self.W_out,
                                     np.concatenate([states[n+1,:],inputs[n+1,:]])))
-
 
         return self._unscale_teacher(self.out_activation(outputs[1:]))
 

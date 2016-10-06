@@ -62,31 +62,33 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     if n_input+n_output != keysnum:
         print('Invalid input dimention')
         sys.exit()
-    train_ctrl,test_ctrl = [],[]
-    train_output,test_output = [],[]
+    train_ctrl, test_ctrl = None, None
+    train_output, test_output = None, None
     for key in inputdata.keys()[:n_input]:
-        if not train_ctrl:
+        if train_ctrl is None:
             train_ctrl = np.array(inputdata[key][:traintest_cutoff])
             test_ctrl = np.array(inputdata[key][traintest_cutoff:])
         else:
             train_ctrl = np.vstack([train_ctrl,np.array(inputdata[key][:traintest_cutoff])])
             test_ctrl = np.vstack([test_ctrl, np.array(inputdata[key][traintest_cutoff:])])
-    else:
-        train_ctrl = np.ones(traintest_cutoff)
-        test_ctrl = np.ones(N-traintest_cutoff)
     for key in inputdata.keys()[n_input:]:
-        if not train_output:
+        if train_output is None:
             train_output = np.array(inputdata[key][:traintest_cutoff])
             test_output = np.array(inputdata[key][traintest_cutoff:])
         else:
-            train_output = np.vstack([train_output,np.array(inputdata[key][:traintest_cutoff])])
+            train_output = np.vstack([train_output, np.array(inputdata[key][:traintest_cutoff])])
             test_output = np.vstack([test_output, np.array(inputdata[key][traintest_cutoff:])])
-    else:
-        train_output = np.ones(traintest_cutoff)
-        test_output = np.ones(N-traintest_cutoff)
+    if train_ctrl is None:
+        train_ctrl = np.zeros(traintest_cutoff)
+        test_ctrl = np.zeros(N-traintest_cutoff)
+    if train_output is None:
+        train_output = np.zeros(traintest_cutoff)
+        test_output = np.zeros(N-traintest_cutoff)
+    if params['n_inputs'] == 0:
+        params['n_inputs'] = 1
 
     esn = ESN(**params)
-    pred_train = esn.fit(train_ctrl,train_output)
+    pred_train = esn.fit(train_ctrl, train_output)
     pred_test = esn.predict(test_ctrl)
     #pd.DataFrame(pred_test).to_csv(outputfile)
 
@@ -94,20 +96,20 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
         window_tr = range(len(train_output)/4,len(train_output)/4+2000)
         plt.figure(figsize=(12, 4))
         plt.subplot(211)
-        plt.plot(train_ctrl[window_tr],label='control')
+        if n_input!=0:
+            plt.plot(train_ctrl[window_tr],label='control')
         plt.plot(train_output[window_tr],label='target')
         plt.plot(pred_train[window_tr],label='model')
         plt.legend(fontsize='x-small')
         plt.title('training (excerpt)')
-        plt.ylim([-0.1,1.1])
         window_test = range(800)
         plt.subplot(212)
-        plt.plot(test_ctrl[window_test],label='control')
+        if n_input!=0:
+            plt.plot(test_ctrl[window_test],label='control')
         plt.plot(test_output[window_test],label='target')
         plt.plot(pred_test[window_test],label='model')
         plt.legend(fontsize='x-small')
         plt.title('test (excerpt)')
-        plt.ylim([-0.1,1.1])
         plt.show()
 
 

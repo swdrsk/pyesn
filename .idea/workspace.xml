@@ -42,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_pyESN_mackeyglass.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_pyESN_mackeyglass.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+            <state relative-caret-position="442">
+              <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -79,8 +79,8 @@
       <file leaf-file-name="run_pyESN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/run_pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+            <state relative-caret-position="612">
+              <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -88,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pyESN.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pyESN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
+            <state relative-caret-position="663">
+              <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -109,11 +109,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/echo_state_network/ensemble_neurons.py" />
-        <option value="$PROJECT_DIR$/echo_state_network/pyESN.py" />
         <option value="$PROJECT_DIR$/echo_state_network/generate_data.py" />
         <option value="$PROJECT_DIR$/echo_state_network/tools/generate_paramfile.py" />
-        <option value="$PROJECT_DIR$/echo_state_network/run_pyESN.py" />
         <option value="$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py" />
+        <option value="$PROJECT_DIR$/echo_state_network/pyESN.py" />
+        <option value="$PROJECT_DIR$/echo_state_network/run_pyESN.py" />
       </list>
     </option>
   </component>
@@ -378,6 +378,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2244">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/echo_state_network/tools/generate_paramfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="901">
@@ -394,20 +404,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
+    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2244">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
+        <state relative-caret-position="442">
+          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -416,18 +416,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/echo_state_network/run_pyESN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+        <state relative-caret-position="612">
+          <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
+    <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+        <state relative-caret-position="663">
+          <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
