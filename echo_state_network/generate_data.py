@@ -23,6 +23,7 @@ def _run():
     parser.add_argument('-n','--nums',default=15000,type=int)
     parser.add_argument('-func','--function',
                         help=' function name option : %s'%(', '.join(function_option)))
+    parser.add_argument('-o', '--option',type=str) # option parser : must be dictva
     args = parser.parse_args()
     if args.filename:
         params = {'filename':args.filename,'num':args.nums,'display':args.display}
@@ -71,9 +72,11 @@ def Macky_glass(num,filename = "macky_glass.csv",display=False):
 def long_short_wave(num,filename="longshortwave5.txt",display=False):
     N = num
     pi = np.pi
+    long_period = 200
+    short_period = 50
     t = np.array(range(N))
-    l = np.sin(t*2*pi/200)
-    s = np.sin(t*2*pi/50)
+    l = np.sin(t*2*pi/long_period)
+    s = np.sin(t*2*pi/short_period)
     res = l + s*0.3
 
     filename = datadir+filename

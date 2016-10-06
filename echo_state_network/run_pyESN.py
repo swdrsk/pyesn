@@ -102,7 +102,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
         plt.plot(pred_train[window_tr],label='model')
         plt.legend(fontsize='x-small')
         plt.title('training (excerpt)')
-        window_test = range(800)
+        window_test = range(1500)
         plt.subplot(212)
         if n_input!=0:
             plt.plot(test_ctrl[window_test],label='control')

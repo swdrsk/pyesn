@@ -5,9 +5,9 @@ import pandas as pd
 import argparse
 
 datadir = "../data/"
-FILE = datadir+"macky_glass.csv"
+#FILE = datadir+"macky_glass.csv"
 #FILE = datadir+"sinwave.txt"
-#FILE = datadir+"longshortwave3.txt"
+FILE = datadir+"longshortwave1.txt"
 #data = np.load('mackey_glass_t17.npy') #  http://minds.jacobs-university.de/mantas/code
 data = pd.read_csv(FILE)["output"]
 data = np.array(data)
