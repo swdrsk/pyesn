@@ -57,8 +57,8 @@ def echo_state_neuron(input):
 
 
 def LIFensembles(input_flag = True):
-    exneuron = 80
-    inneuron = 10
+    exneuron = 160
+    inneuron = 20
     duration = 0.1 * second
 
     taum = 30 * ms

@@ -5,9 +5,9 @@ import pandas as pd
 import argparse
 
 datadir = "../data/"
-#FILE = datadir+"macky_glass.csv"
+FILE = datadir+"macky_glass.csv"
 #FILE = datadir+"sinwave.txt"
-FILE = datadir+"longshortwave1.txt"
+#ILE = datadir+"longshortwave1.txt"
 #data = np.load('mackey_glass_t17.npy') #  http://minds.jacobs-university.de/mantas/code
 data = pd.read_csv(FILE)["output"]
 data = np.array(data)
@@ -17,7 +17,7 @@ esn = ESN(n_inputs = 1,
           leakyrate = 0.2,
           sparsity = 0.001,
           n_reservoir = 300,
-          spectral_radius = 0.95,
+          spectral_radius = 1.5,
           random_state=42)
 
 trainlen = 2000

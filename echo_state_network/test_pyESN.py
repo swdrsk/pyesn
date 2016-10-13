@@ -117,8 +117,8 @@ def test_pyESN(drawflag=False,sparsity=0.8):
         plt.title('training (excerpt)')
         plt.ylim([-0.1,1.1])
         
-        #window_test = range(2000)
-        window_test = range(200)
+        window_test = range(2000)
+        #window_test = range(200)
         plt.figure(figsize=(10,1.5))
         plt.plot(test_ctrl[window_test,1],label='control')
         plt.plot(test_output[window_test],label='target')

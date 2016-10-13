@@ -74,6 +74,7 @@ class ESN():
         self.out_activation = out_activation
         self.inverse_out_activation = inverse_out_activation
         self.random_state = random_state
+        self.reservoir_state = None
 
         self.check_num = 20
 
@@ -107,7 +108,9 @@ class ESN():
         self.W = W*(self.spectral_radius/radius)
 
         # random input weights:
+        #self.W_in = self.random_state_.rand(self.n_reservoir, self.n_inputs)*2-1
         self.W_in = self.random_state_.rand(self.n_reservoir, self.n_inputs)*2-1
+        self.W_in[self.random_state_.rand(*self.W_in.shape) < 0.1] = 0
         # random feedback (teacher forcing) weights:
         self.W_feedb = self.random_state_.rand(self.n_reservoir, self.n_outputs)*2-1
 
@@ -190,6 +193,7 @@ class ESN():
         transient = min(int(inputs.shape[1]/10),100)
         # include the raw inputs:
         extended_states = np.hstack((states,inputs_scaled))
+        self.reservoir_state = states
         # Solve for W_out:
         self.W_out = np.dot(np.linalg.pinv(extended_states[transient:,:]),
                   self.inverse_out_activation(teachers_scaled[transient:,:])).T
@@ -247,5 +251,8 @@ class ESN():
             outputs[n+1,:] = self.out_activation(np.dot(self.W_out,
                                     np.concatenate([states[n+1,:],inputs[n+1,:]])))
 
+        self.reservoir_state = states
         return self._unscale_teacher(self.out_activation(outputs[1:]))
 
+    def get_reservoir_states(self):
+        return self.reservoir_state

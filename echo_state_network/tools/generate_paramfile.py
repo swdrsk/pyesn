@@ -7,12 +7,14 @@ def generate_paramfile(filename,
                        n_inputs,
                        n_outputs,
                        n_reservoir,
-                       leakyrate):
+                       leakyrate,
+                       spectral_radius):
     params = {
         "n_inputs":n_inputs,
         "n_outputs":n_outputs,
         "n_reservoir":n_reservoir,
         "leakyrate":leakyrate,
+        "spectral_radius":spectral_radius,
     }
     f=open(paramdir+filename,"w")
     w = csv.writer(f)
@@ -28,13 +30,19 @@ def run():
     parser.add_argument('-out','--n_outputs',default=1)
     parser.add_argument('-N','--n_reservoir',default=300)
     parser.add_argument('-l','--leakyrate',default=0.2)
+    parser.add_argument('-r','--radius',default=0.95)
+    parser.add_argument('-all','--runall',default=False,action='store_true')
     args = parser.parse_args()
-    generate_paramfile(filename=args.filename,
-                       n_inputs=args.n_inputs,
-                       n_outputs=args.n_outputs,
-                       n_reservoir=args.n_reservoir,
-                       leakyrate=args.leakyrate)
-    
+    if args.runall:
+        run_all()
+    else:
+        generate_paramfile(filename=args.filename,
+                           n_inputs=args.n_inputs,
+                           n_outputs=args.n_outputs,
+                           n_reservoir=args.n_reservoir,
+                           leakyrate=args.leakyrate,
+                           spectral_radius=args.radius)
+
 
 def run_all():
     n_reservoir = [300, 500, 1000, 1500, 2000]

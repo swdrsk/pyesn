@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 from pyESN import ESN
 import argparse
 import sys,os
+import sklearn .decomposition
 
 import pdb
 
@@ -57,6 +59,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     N = inputdata.shape[0]
     keysnum = inputdata.shape[1]
     traintest_cutoff = int(np.ceil(0.7*N))
+    print N,traintest_cutoff
     n_input = params['n_inputs']
     n_output = params['n_outputs']
     if n_input+n_output != keysnum:
@@ -87,11 +90,39 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     if params['n_inputs'] == 0:
         params['n_inputs'] = 1
 
-    esn = ESN(**params)
-    pred_train = esn.fit(train_ctrl, train_output)
-    pred_test = esn.predict(test_ctrl)
-    #pd.DataFrame(pred_test).to_csv(outputfile)
+    #esn = ESN(**params)
+    esn = ESN(n_inputs = 1,
+              n_outputs = 1,
+              n_reservoir = 300,
+              spectral_radius = 1.5,
+              noise = 0.001,
+              input_shift = 0,
+              input_scaling = 3,
+              teacher_scaling = 1.12,
+              teacher_shift = -0.7,
+              out_activation = np.tanh,
+              inverse_out_activation = np.arctanh,
+              silent = False)
 
+    pred_train = esn.fit(train_ctrl, train_output)
+
+    reservoir_state = esn.get_reservoir_states()
+    pca = sklearn.decomposition.PCA(3)
+    pca.fit(reservoir_state)
+    pcaindex = pca.transform(reservoir_state)
+    pred_test = esn.predict(test_ctrl)
+    reservoir_state = esn.get_reservoir_states()
+    pcaindex_pred = pca.transform(reservoir_state)
+
+    #pd.DataFrame(pred_test).to_csv(outputfile)
+    if drawflag:
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        ax.plot(*zip(*pcaindex),color="blue")
+        ax.plot(*zip(*pcaindex_pred),color="red")
+        ax.set_xlabel('PC1')
+        ax.set_ylabel('PC2')
+        ax.set_zlabel('PC3')
     if drawflag:
         window_tr = range(len(train_output)/4,len(train_output)/4+2000)
         plt.figure(figsize=(12, 4))
@@ -102,7 +133,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
         plt.plot(pred_train[window_tr],label='model')
         plt.legend(fontsize='x-small')
         plt.title('training (excerpt)')
-        window_test = range(1500)
+        window_test = range(2000)
         plt.subplot(212)
         if n_input!=0:
             plt.plot(test_ctrl[window_test],label='control')
