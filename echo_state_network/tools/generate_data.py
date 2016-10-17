@@ -14,7 +14,7 @@ datadir = "../../data/"
 
 def _run():
     function_option = [
-        'control_sinwave', 'mackyglass', 'sinwave', 'long_short_wave'
+        'control_sinwave', 'mackyglass', 'sinwave', 'long_short_wave', 'inpulse'
     ]
     parser = argparse.ArgumentParser()
     parser.add_argument('-f','--filename',default=None)
@@ -36,6 +36,8 @@ def _run():
         sinwave(**params)
     elif args.function=='long_short_wave':
         long_short_wave(**params)
+    elif args.function=='inpulse':
+        inpulse(**params)
     else:
         print('input correct option as -func [%s]'%(', '.join(function_option)))
 
@@ -140,6 +142,20 @@ def control_sinwave(num,filename="control_sinwave.txt",display=False):
         plt.plot(range(display_range),output[:display_range]) # output[:display_range]ではうまくいかない。なぜ？
         plt.show()
 
+        
+def inpulse(num,filename="inpulse.txt",display=False):
+    filename = datadir + filename
+    N = num
+    prestart_time = int(N/5)
+    inpulse_time = min(100,int(N/10))
+    output = np.zeros(N)
+    output[prestart_time:prestart_time+inpulse_time] = 2
+    pd.DataFrame(output,columns=['input']).to_csv(filename,index=False)
+    if display:
+        plt.figure(figsize=(12,1.5))
+        plt.plot(range(N),output)
+        plt.show()
+    
         
 def MemoryCapacity(A,B,k=10):
     if len(A)!=len(B):
