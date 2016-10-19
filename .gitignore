@@ -12,7 +12,8 @@ echo_state_network/testcode.py
 *.pyc
 *~
 *.xml
+*#
 
 #ignore .idea folder
 .idea/
-echo_state_network/#run_pyESN.py#
+*idea/
