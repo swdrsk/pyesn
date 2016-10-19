@@ -17,3 +17,5 @@ echo_state_network/testcode.py
 #ignore .idea folder
 .idea/
 *idea/
+.idea/workspace.xml
+.idea/tasks.xml
