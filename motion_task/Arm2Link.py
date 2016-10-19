@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import math
 import numpy as np
-
+import scipy.optimize
 
 
 
@@ -36,8 +36,60 @@ class Arm2Link:
     def set_joints(self, joints):
         self.q = list(joints)
 
-arm = Arm2Link(L=[100,100])
-la = Lorenz(10,28,8./3)
+
+class ArmOrbit(Arm2Link):
+    def __init__(self,q=None, q0=None, L=None):
+        Arm2Link.__init__(self, q=q, q0=q0, L=L)
+        self.orbit = None
+        self.rst = []
+        self.step = 0
+
+    def set_orbit(self, orbit):
+        self.orbit = orbit
+
+    def inv_kin(self, xy):
+        def distance_to_default(q, *args):
+            # weights found with trial and error, get some wrist bend, but not much
+            weight = [1, 1]
+            return np.sqrt(np.sum([(qi - q0i) ** 2 * wi
+                                   for qi, q0i, wi in zip(q, self.q0, weight)]))
+
+        def x_constraint(q, xy):
+            x = (self.L[0] * np.cos(q[0]) + self.L[1] * np.cos(q[0] + q[1])) - xy[0]
+            return x
+
+        def y_constraint(q, xy):
+            y = (self.L[0] * np.sin(q[0]) + self.L[1] * np.sin(q[0] + q[1])) - xy[1]
+            return y
+
+        return scipy.optimize.fmin_slsqp(
+            func=distance_to_default,
+            x0=self.q,
+            eqcons=[x_constraint,
+                    y_constraint],
+            args=(xy,),
+            iprint=0)  # iprint=0 suppresses output
+
+    def get_jointorbit(self):
+        if self.orbit is None:
+            return None
+        rst = []
+        for x, y in self.orbit:
+            rst.append(self.inv_kin(xy=[x, y]))
+        return rst
+
+    def yield_jointorbit(self):
+        if self.orbit is None:
+            pass
+        xy = self.orbit[self.step]
+        self.step += 1
+        return self.inv_kin(xy)
+
+
+arm = ArmOrbit(L=[100,100])
+step_angle = np.arange(0, 10*np.pi, 0.05*np.pi)
+orbit = [[120+30*np.sin(i) for i in step_angle],[120+30*np.cos(i) for i in step_angle]]
+arm.set_orbit(zip(*orbit))
 fig = plt.figure()
 Lmax = np.sum(arm.L)
 ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
@@ -51,9 +103,9 @@ def init():
     return line,
 
 def animation0(i):
-    global arm,la
-    j1,j2,j3 = la.step()
-    arm.set_joints([j1*math.pi, j2*math.pi])
+    global arm
+    joints = arm.yield_jointorbit()
+    arm.set_joints(joints)
     startpos = arm.get_startpos()
     jointpos = arm.get_jointpos()
     handpos = arm.get_handpos()
@@ -61,5 +113,7 @@ def animation0(i):
     #line.set_data((0,100,100), (0,0,100))
     return line,
 
-ani = animation.FuncAnimation(fig, animation0, frames=1000, blit=True, interval=300, init_func=init)
+ani = animation.FuncAnimation(fig, animation0, frames=1000, blit=True, interval=100, init_func=init)
 plt.show()
+
+#print arm.get_jointorbit()
