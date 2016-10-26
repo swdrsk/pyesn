@@ -14,7 +14,7 @@ datadir = "../../data/"
 
 def _run():
     function_option = [
-        'control_sinwave', 'mackyglass', 'sinwave', 'long_short_wave', 'inpulse'
+        'control_sinwave', 'mackyglass', 'sinwave', 'long_short_wave', 'inpulse', 'continuous'
     ]
     parser = argparse.ArgumentParser()
     parser.add_argument('-f','--filename',default=None)
@@ -38,6 +38,8 @@ def _run():
         long_short_wave(**params)
     elif args.function=='inpulse':
         inpulse(**params)
+    elif args.function=='continuous':
+        continuous(**params)
     else:
         print('input correct option as -func [%s]'%(', '.join(function_option)))
 
@@ -149,14 +151,26 @@ def inpulse(num,filename="inpulse.txt",display=False):
     prestart_time = int(N/5)
     inpulse_time = min(100,int(N/10))
     output = np.zeros(N)
-    output[prestart_time:prestart_time+inpulse_time] = 2
+    output[prestart_time:prestart_time+inpulse_time] = 1
     pd.DataFrame(output,columns=['input']).to_csv(filename,index=False)
     if display:
         plt.figure(figsize=(12,1.5))
         plt.plot(range(N),output)
         plt.show()
     
-        
+
+def continuous(num, filename='continuous.txt', display=False):
+    filename = datadir + filename
+    N = num
+    prestart_time = int(N/5)
+    output = np.zeros(N)
+    output[prestart_time:] = 0.5
+    pd.DataFrame(output, columns=['input']).to_csv(filename, index=False)
+    if display:
+        plt.figure(figsize=(12, 1.5))
+        plt.plot(range(N), output)
+        plt.show()
+
 def MemoryCapacity(A,B,k=10):
     if len(A)!=len(B):
         print("MC error")

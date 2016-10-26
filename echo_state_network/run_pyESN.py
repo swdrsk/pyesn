@@ -58,7 +58,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     params = load_parameter(parameter)
     N = inputdata.shape[0]
     keysnum = inputdata.shape[1]
-    traintest_cutoff = int(np.ceil(0.7*N))
+    traintest_cutoff = int(np.ceil(0.8*N))
     print N,traintest_cutoff
     n_input = params['n_inputs']
     n_output = params['n_outputs']
@@ -94,8 +94,8 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
     esn = ESN(n_inputs = 1,
               n_outputs = 1,
               n_reservoir = 300,
-              spectral_radius = 1.5,
-              noise = 0.001,
+              spectral_radius = 0.8,
+              noise = 0,#0.001,
               input_shift = 0,
               input_scaling = 3,
               teacher_scaling = 1.12,
@@ -104,7 +104,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
               inverse_out_activation = np.arctanh,
               silent = False)
 
-    pred_train = esn.fit(train_ctrl, train_output)
+    pred_train = esn.fit(train_ctrl, train_output, inspect=True)
 
     reservoir_state = esn.get_reservoir_states()
     pca = sklearn.decomposition.PCA(3)

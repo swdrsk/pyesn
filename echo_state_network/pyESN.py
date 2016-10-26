@@ -205,11 +205,17 @@ class ESN():
 
         # optionally visualize the collected states
         if inspect:
+            inspect_time = 400
             from matplotlib import pyplot as plt
             # (^-- we depend on matplotlib only if this option is used)
             plt.figure(figsize=(states.shape[0]*0.0025,states.shape[1]*0.01))
             plt.imshow(extended_states.T,aspect='auto',interpolation='nearest')
             plt.colorbar()
+            plt.figure()
+            plt.plot(range(inspect_time),inputs[:inspect_time])
+            plt.plot(range(inspect_time),outputs[:inspect_time])
+            for i in range(3             ):
+                plt.plot(range(inspect_time),states[:inspect_time,i])
 
         if not self.silent: print("training error:")
         # apply learned weights to the collected states:

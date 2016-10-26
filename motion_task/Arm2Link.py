@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import math
 import numpy as np
 import scipy.optimize
-
+import pandas as pd
 
 
 class Arm2Link:
@@ -85,18 +85,28 @@ class ArmOrbit(Arm2Link):
         self.step += 1
         return self.inv_kin(xy)
 
+    def save_orbit(self, filename):
+        if self.orbit is None:
+            print('let set_orbit')
+            return None
+        else:
+            rst = self.get_jointorbit()
+            pd.DataFrame(rst, columns=['output1', 'output2']).to_csv(filename, index=False)
+            return rst
 
+
+filename = "../data/arms.csv"
 arm = ArmOrbit(L=[100,100])
 step_angle = np.arange(0, 10*np.pi, 0.05*np.pi)
-orbit = [[120+30*np.sin(i) for i in step_angle],[120+30*np.cos(i) for i in step_angle]]
+orbit = [[110+30*np.sin(i) for i in step_angle],[110+30*np.cos(i) for i in step_angle]]
 arm.set_orbit(zip(*orbit))
+arm.save_orbit(filename)
 fig = plt.figure()
 Lmax = np.sum(arm.L)
 ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
                      xlim=(-Lmax,Lmax), ylim=(-Lmax,Lmax))
 ax.grid()
 line, = ax.plot([], [], 'o-', lw=3)
-
 
 def init():
     line.set_data([], [])

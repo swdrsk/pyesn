@@ -85,9 +85,54 @@ class Network:
 #     def __init__(self):
 #         Network.__init__()
 
+
+class ElmanRNN(Network):
+    def __init__(self,
+                 n=200,
+                 leaky_rate=0.8,
+                 sparsity=0.2,
+                 radius=0.8,
+                 random_state=1):
+        Network.__init__(n=n,
+                         leaky_rate=leaky_rate,
+                         sparsity=sparsity,
+                         radius=radius,
+                         random_state=random_state)
+        self.Win = self.init_input_weight()
+
+    def init_input_weight(self):
+        n = int(self.N/2)
+
+
+class NoisyNetwok(Network):
+    def __init__(self,
+                 noisy=0.001,
+                 n=200,
+                 leaky_rate=0.8,
+                 sparsity=0.2,
+                 radius=0.8,
+                 random_state=1):
+        Network.__init__(self,
+                         n=n,
+                         leaky_rate=leaky_rate,
+                         sparsity=sparsity,
+                         radius=radius,
+                         random_state=random_state)
+        self.noisy = noisy
+
+    def __update(self,inp):
+        u = self.a * self.u + (1-self.a) * np.tanh(self.Win*inp + np.dot(self.W, self.u)) +\
+            self.random_state_.rand(self.N) * self.noisy
+        return u
+
+
 if __name__ == "__main__":
-    nw = Network(n=300, leaky_rate=0.8, radius=12.0,sparsity=0.9)
-    inputsignal = pd.read_csv("../data/inpulse.txt")["input"]
+    #nw = Network(n=300, leaky_rate=0, radius=1.6, sparsity=0.9)
+    nw = NoisyNetwok(n=1000, leaky_rate=0., radius=0.99, sparsity=0.9)
+    #filename = "../data/inpulse.txt"
+    filename = "../data/continuous.txt"
+    inputsignal = pd.read_csv(filename)["input"]
+    #inputsignal = pd.read_csv('../data/sinwave.txt')['output']
     nw.run(inputsignal)
-    nw.plot_reservoir(cutoff=[2900, 4000])
+    nw.plot_reservoir(cutoff=[2900, 4000],nums=10)
 
