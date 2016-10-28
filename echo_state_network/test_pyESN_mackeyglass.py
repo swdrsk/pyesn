@@ -17,7 +17,7 @@ esn = ESN(n_inputs = 1,
           leakyrate = 0.2,
           sparsity = 0.001,
           n_reservoir = 300,
-          spectral_radius = 1.5,
+          spectral_radius = 0.99,
           random_state=42)
 
 trainlen = 2000

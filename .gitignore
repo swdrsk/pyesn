@@ -1,6 +1,7 @@
 #data folder
 params/
 data/
+stock/
 
 #result folder
 result/

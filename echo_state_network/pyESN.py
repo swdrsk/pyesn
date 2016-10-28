@@ -28,7 +28,7 @@ def correct_dimensions(s,targetlength):
 
 class ESN():
     def __init__(self, n_inputs, n_outputs, n_reservoir=200, leakyrate=0.2,
-                 spectral_radius=0.95, sparsity=0, varidity=1, noise=0.001,input_shift=None,
+                 spectral_radius=0.95, sparsity=0, varidance=1, noise=0.001,input_shift=None,
                  input_scaling=None, teacher_forcing=True, feedback_scaling=None,
                  teacher_scaling=None, teacher_shift=None,
                  out_activation=lambda x:x, inverse_out_activation=lambda x:x,
@@ -61,7 +61,7 @@ class ESN():
         self.n_outputs = correct_dimensions(n_outputs,1)
         self.spectral_radius = correct_dimensions(spectral_radius,1)
         self.sparsity = correct_dimensions(sparsity,1)
-        self.varidity = correct_dimensions(varidity,1)
+        self.varidance = correct_dimensions(varidance,1)
         self.leakyrate = correct_dimensions(leakyrate,1)
         self.noise = correct_dimensions(noise,1)
         self.noise_ = self.noise
@@ -190,13 +190,13 @@ class ESN():
         # network states that is closest to the target output
         if not self.silent: print("fitting...")
         # we'll disregard the first few states:
-        transient = min(int(inputs.shape[1]/10),100)
+        transient = min(int(inputs.shape[0]/10),100)
         # include the raw inputs:
         extended_states = np.hstack((states,inputs_scaled))
         self.reservoir_state = states
         # Solve for W_out:
-        self.W_out = np.dot(np.linalg.pinv(extended_states[transient:,:]),
-                  self.inverse_out_activation(teachers_scaled[transient:,:])).T
+        # self.W_out = np.dot(np.linalg.pinv(extended_states[transient:,:]), self.inverse_out_activation(teachers_scaled[transient:,:])).T
+        self.W_out = np.dot(np.linalg.pinv(extended_states[transient:,:]), teachers_scaled[transient:,:]).T
 
         # remember the last state for later:
         self.laststate = states[-1,:]
@@ -214,7 +214,7 @@ class ESN():
             plt.figure()
             plt.plot(range(inspect_time),inputs[:inspect_time])
             plt.plot(range(inspect_time),outputs[:inspect_time])
-            for i in range(3             ):
+            for i in range(3):
                 plt.plot(range(inspect_time),states[:inspect_time,i])
 
         if not self.silent: print("training error:")

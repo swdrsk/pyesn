@@ -97,7 +97,7 @@ class ArmOrbit(Arm2Link):
 
 filename = "../data/arms.csv"
 arm = ArmOrbit(L=[100,100])
-step_angle = np.arange(0, 10*np.pi, 0.05*np.pi)
+step_angle = np.arange(0, 100*np.pi, 0.05*np.pi)
 orbit = [[110+30*np.sin(i) for i in step_angle],[110+30*np.cos(i) for i in step_angle]]
 arm.set_orbit(zip(*orbit))
 arm.save_orbit(filename)

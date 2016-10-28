@@ -9,7 +9,7 @@ rng = np.random.RandomState(42)
 
 
 def run1():
-    FILE="./result/sparsity_pyESN.csv"
+    FILE="../result/sparsity_pyESN_radius1.5.csv"
     f = open(FILE,"w")
     f.write("sparsity,mse,spectro_mse\n")
     for i in [0,0.001,0.005,0.007,0.009,0.01,0.05,0.1,0.5,0.9,0.95,0.99]:
@@ -68,6 +68,7 @@ def evaluate_spectrogram(p_data,t_data,display=False):
         mse += np.mean((psx-tsx)**2)
     return mse
 
+
 def test_pyESN(drawflag=False,sparsity=0.8):    
     N = 15000 # signal length
     min_period = 2
@@ -83,7 +84,7 @@ def test_pyESN(drawflag=False,sparsity=0.8):
     esn = ESN(n_inputs = 2,
               n_outputs = 1,
               n_reservoir = 200,
-              spectral_radius = 0.99,
+              spectral_radius = 1.5,
               sparsity = sparsity,
               noise = 0,#0.001,
               input_shift = [0,0],
@@ -147,4 +148,4 @@ def test_pyESN(drawflag=False,sparsity=0.8):
     return mse,s_mse
 
 if __name__=="__main__":
-    run()
+    run1()

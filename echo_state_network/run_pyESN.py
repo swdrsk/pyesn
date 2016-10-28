@@ -72,15 +72,15 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
             train_ctrl = np.array(inputdata[key][:traintest_cutoff])
             test_ctrl = np.array(inputdata[key][traintest_cutoff:])
         else:
-            train_ctrl = np.vstack([train_ctrl,np.array(inputdata[key][:traintest_cutoff])])
-            test_ctrl = np.vstack([test_ctrl, np.array(inputdata[key][traintest_cutoff:])])
+            train_ctrl = np.array(zip(*np.vstack([train_ctrl,np.array(inputdata[key][:traintest_cutoff])])))
+            test_ctrl = np.array(zip(*np.vstack([test_ctrl, np.array(inputdata[key][traintest_cutoff:])])))
     for key in inputdata.keys()[n_input:]:
         if train_output is None:
             train_output = np.array(inputdata[key][:traintest_cutoff])
             test_output = np.array(inputdata[key][traintest_cutoff:])
         else:
-            train_output = np.vstack([train_output, np.array(inputdata[key][:traintest_cutoff])])
-            test_output = np.vstack([test_output, np.array(inputdata[key][traintest_cutoff:])])
+            train_output = np.array(zip(*np.vstack([train_output, np.array(inputdata[key][:traintest_cutoff])])))
+            test_output = np.array(zip(*np.vstack([test_output, np.array(inputdata[key][traintest_cutoff:])])))
     if train_ctrl is None:
         train_ctrl = np.zeros(traintest_cutoff)
         test_ctrl = np.zeros(N-traintest_cutoff)
@@ -92,9 +92,9 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
 
     #esn = ESN(**params)
     esn = ESN(n_inputs = 1,
-              n_outputs = 1,
+              n_outputs = 2,
               n_reservoir = 300,
-              spectral_radius = 0.8,
+              spectral_radius = 1.5,
               noise = 0,#0.001,
               input_shift = 0,
               input_scaling = 3,
@@ -129,6 +129,7 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
         plt.subplot(211)
         if n_input!=0:
             plt.plot(train_ctrl[window_tr],label='control')
+
         plt.plot(train_output[window_tr],label='target')
         plt.plot(pred_train[window_tr],label='model')
         plt.legend(fontsize='x-small')
