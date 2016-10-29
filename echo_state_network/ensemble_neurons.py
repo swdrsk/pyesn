@@ -79,9 +79,9 @@ def LIFensembles(input_rate,input_flag=True):
     duration = 1 * second
 
     taum = 30 * ms
-    taue = 10 * ms # 5
-    taui = 10 * ms # 10
-    Vt = -48.5 * mV # threshold 50
+    taue = 12 * ms # 5
+    taui = 24 * ms # 10
+    Vt = -48 * mV # threshold 50
     Vr = -55 * mV # reset
     El = -49 * mV # -49 * mV
 
@@ -109,7 +109,7 @@ def LIFensembles(input_rate,input_flag=True):
 
 
     if input_flag:
-        inputtype =  "poisson"
+        inputtype = "control_input"
         if inputtype == "poisson":
             Pg = PoissonGroup(exneuron,25*Hz)
         elif inputtype == "control_input":
@@ -122,7 +122,7 @@ def LIFensembles(input_rate,input_flag=True):
             Pg = NeuronGroup(exneuron, 'vi = ta(t) : 1', threshold='vi > 0.5', reset='v = 0', refractory=10 * ms)
         weg = (60 * 0.27 / 10) * mV
         Ceg = Synapses(Pg, P, on_pre='ge += we')
-        Ceg.connect('i<exneuron', p=0.002)
+        Ceg.connect('i<exneuron', p=0.005)
         pp_mon = PopulationRateMonitor(Pg)
 
     run(duration)
@@ -133,13 +133,13 @@ def LIFensembles(input_rate,input_flag=True):
         xlabel('Time (ms)')
         ylabel('Neuron index')
         subplot(312)
-        plot(pp_mon.t/ms, pp_mon.smooth_rate(window='gaussian', width=10*ms)/Hz)
+        plot(pp_mon.t/ms, pp_mon.smooth_rate(window='gaussian', width=20*ms)/Hz)
         xlabel('Time (ms)')
         ylabel('Input Rate [Hz]')
         subplot(313)
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='5ms')
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
-        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz, label='10ms')
         xlabel("Time (ms)")
         ylabel('Output Rate [Hz]')
     else:
@@ -204,8 +204,7 @@ if __name__=="__main__":
     #draw_attractor(output)
     #_input = (np.sin(np.array(range(1000))*0.01) + 1.1) * 10
     spikes = input_firing_rate2discrete_spike(_input, neuron_num)
-    #LIFensembles(_input)
-    # echo_out = echo_state_neuron(np.array(_input)/volt)
-    # draw_output(echo_out)
-    #plt.show()
-    experiment()
+    LIFensembles(_input)
+    echo_out = echo_state_neuron(np.array(_input)/volt)
+    draw_output(echo_out)
+    plt.show()

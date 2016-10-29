@@ -33,8 +33,8 @@
       <file leaf-file-name="ensemble_neurons.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+            <state relative-caret-position="1065">
+              <caret line="141" column="92" selection-start-line="141" selection-start-column="92" selection-end-line="141" selection-end-column="92" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -369,7 +369,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="0" width="1874" height="1084" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -822,8 +822,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+        <state relative-caret-position="1065">
+          <caret line="141" column="92" selection-start-line="141" selection-start-column="92" selection-end-line="141" selection-end-column="92" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
