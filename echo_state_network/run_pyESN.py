@@ -92,14 +92,14 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
 
     #esn = ESN(**params)
     esn = ESN(n_inputs = 1,
-              n_outputs = 1,
+              n_outputs = 2,
               n_reservoir = 300,
-              spectral_radius = 0.99,
+              spectral_radius = 1.5,
               noise = 0,#0.001,
-              input_shift = 0,
+              input_shift = 0.5,
               # input_scaling = 3,
-              # teacher_scaling = 1.35, #1.12,
-              # teacher_shift = -0.9, # -0.7,
+              teacher_scaling = 1.35, #1.12,
+              teacher_shift = -0.9, # -0.7,
               out_activation = np.tanh,
               inverse_out_activation = np.arctanh,
               silent = False)
@@ -150,11 +150,10 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
                 plt.subplot(211)
                 if n_input != 0:
                     plt.plot(train_ctrl[window_tr], label='control')
-                if n_output < 2:
-                    plt.plot(train_output[window_tr, wo], label='target')
-                    plt.plot(pred_train[window_tr, wo], label='model')
-                    plt.legend(fontsize='x-small')
-                    plt.title('training (excerpt)')
+                plt.plot(train_output[window_tr, wo], label='target')
+                plt.plot(pred_train[window_tr, wo], label='model')
+                plt.legend(fontsize='x-small')
+                plt.title('training (excerpt)')
                 window_test = range(300)
                 plt.subplot(212)
                 if n_input != 0:

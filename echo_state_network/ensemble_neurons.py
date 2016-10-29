@@ -10,7 +10,7 @@ import pdb
 neuron_num = 800
 
 def echo_state_neuron(inputs):
-    a = 0.7
+    a = 0.8
     m = 0
     output = np.zeros(len(inputs))
     for time, inp in enumerate(inputs):
@@ -53,7 +53,7 @@ def LIFensemble_exp(hz):
     Pg = PoissonGroup(exneuron, hz * Hz)
     weg = (60 * 0.27 / 10) * mV
     Ceg = Synapses(Pg, P, on_pre='ge += we')
-    Ceg.connect('i<exneuron', p=0.002)
+    Ceg.connect('i<exneuron', p=0.001)
     pp_mon = PopulationRateMonitor(Pg)
     run(duration)
     out_hz = np.average(pp_mon.smooth_rate(window="gaussian", width=10 * ms))
@@ -81,7 +81,7 @@ def LIFensembles(input_rate,input_flag=True):
     taum = 30 * ms
     taue = 12 * ms # 5
     taui = 24 * ms # 10
-    Vt = -48 * mV # threshold 50
+    Vt = -48.5 * mV # threshold 50
     Vr = -55 * mV # reset
     El = -49 * mV # -49 * mV
 
@@ -133,13 +133,13 @@ def LIFensembles(input_rate,input_flag=True):
         xlabel('Time (ms)')
         ylabel('Neuron index')
         subplot(312)
-        plot(pp_mon.t/ms, pp_mon.smooth_rate(window='gaussian', width=20*ms)/Hz)
+        plot(pp_mon.t/ms, pp_mon.smooth_rate(window='gaussian', width=10*ms)/Hz)
         xlabel('Time (ms)')
         ylabel('Input Rate [Hz]')
         subplot(313)
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='5ms')
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
-        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=20*ms)/Hz, label='10ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
         xlabel("Time (ms)")
         ylabel('Output Rate [Hz]')
     else:

@@ -95,10 +95,12 @@ class ArmOrbit(Arm2Link):
             return rst
 
 
-filename = "../data/arms.csv"
+filename = "../data/arms_eight.csv"
 arm = ArmOrbit(L=[100,100])
-step_angle = np.arange(0, 100*np.pi, 0.05*np.pi)
-orbit = [[110+30*np.sin(i) for i in step_angle],[110+30*np.cos(i) for i in step_angle]]
+step_angle = np.arange(0, 1000*np.pi, 0.05*np.pi)
+#orbit = [[110+30*np.sin(i) for i in step_angle],[110+30*np.cos(i) for i in step_angle]]
+step_rect = range(0,60,2)
+orbit = 
 arm.set_orbit(zip(*orbit))
 arm.save_orbit(filename)
 fig = plt.figure()
@@ -124,6 +126,6 @@ def animation0(i):
     return line,
 
 ani = animation.FuncAnimation(fig, animation0, frames=1000, blit=True, interval=100, init_func=init)
-plt.show()
+ani.save('../data/arms.gif', writer='imagemagick', fps=30)
 
 #print arm.get_jointorbit()
