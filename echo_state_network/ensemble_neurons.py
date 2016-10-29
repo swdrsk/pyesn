@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+import sys
 from brian2 import *
 from numpy.random import randn
 from numpy.linalg import norm
 import pdb
 
+
+neuron_num = 800
 
 def echo_state_neuron(inputs):
     a = 0.7
@@ -17,15 +19,15 @@ def echo_state_neuron(inputs):
     return output
 
 
-def LIFensembles(input_rate,input_flag=True):
-    exneuron = 800
-    inneuron = 100
+def LIFensemble_exp(hz):
+    exneuron = neuron_num
+    inneuron = neuron_num/8
     duration = 1 * second
 
     taum = 30 * ms
-    taue = 5 * ms # 5
+    taue = 10 * ms # 5
     taui = 10 * ms # 10
-    Vt = -48 * mV # threshold 50
+    Vt = -48.5 * mV # threshold 50
     Vr = -55 * mV # reset
     El = -49 * mV # -49 * mV
 
@@ -45,14 +47,69 @@ def LIFensembles(input_rate,input_flag=True):
     wi = (-20 * 4.5 / 10) * mV  # inhibitory synaptic weight
     Ce = Synapses(P, P, on_pre='ge += we')
     Ci = Synapses(P, P, on_pre='gi += wi')
-    Ce.connect('i<exneuron', p=0.003)
-    Ci.connect('i>=exneuron', p=0.003)
+    Ce.connect('i<exneuron', p=0.01)
+    Ci.connect('i>=exneuron', p=0.01)
+
+    Pg = PoissonGroup(exneuron, hz * Hz)
+    weg = (60 * 0.27 / 10) * mV
+    Ceg = Synapses(Pg, P, on_pre='ge += we')
+    Ceg.connect('i<exneuron', p=0.002)
+    pp_mon = PopulationRateMonitor(Pg)
+    run(duration)
+    out_hz = np.average(pp_mon.smooth_rate(window="gaussian", width=10 * ms))
+    return out_hz
+
+def experiment():
+    filename = "../result/LIF_neuron.csv"
+    f = open(filename, "w")
+    ctrl_hz = range(0, 80, 5)
+    out_hz = np.zeros(len(ctrl_hz))
+    for ci,hz in enumerate(ctrl_hz):
+        out_hz[ci] = LIFensemble_exp(hz)
+        f.write("%f,%f\n" % (hz, out_hz[ci]))
+    f.close()
+    plt.plot(ctrl_hz, out_hz)
+    plt.scatter(ctrl_hz, out_hz, color="r")
+    plt.show()
+
+
+def LIFensembles(input_rate,input_flag=True):
+    exneuron = neuron_num
+    inneuron = neuron_num/8
+    duration = 1 * second
+
+    taum = 30 * ms
+    taue = 10 * ms # 5
+    taui = 10 * ms # 10
+    Vt = -48.5 * mV # threshold 50
+    Vr = -55 * mV # reset
+    El = -49 * mV # -49 * mV
+
+    eqs = '''
+    dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
+    dge/dt = -ge/taue : volt
+    dgi/dt = -gi/taui : volt
+    '''
+
+    P = NeuronGroup(exneuron+inneuron, eqs, threshold='v>Vt', reset='v = Vr', refractory=3 * ms,
+                    method='linear')
+    P.v = 'Vr + rand() * (Vt - Vr)'
+    P.ge = 0 * mV
+    P.gi = 0 * mV
+
+    we = (60 * 0.27 / 10) * mV  # excitatory synaptic weight (voltage)
+    wi = (-20 * 4.5 / 10) * mV  # inhibitory synaptic weight
+    Ce = Synapses(P, P, on_pre='ge += we')
+    Ci = Synapses(P, P, on_pre='gi += wi')
+    Ce.connect('i<exneuron', p=0.01)
+    Ci.connect('i>=exneuron', p=0.01)
 
     s_mon = SpikeMonitor(P)
     p_mon = PopulationRateMonitor(P)
 
+
     if input_flag:
-        inputtype = "control_input"
+        inputtype =  "poisson"
         if inputtype == "poisson":
             Pg = PoissonGroup(exneuron,25*Hz)
         elif inputtype == "control_input":
@@ -65,9 +122,8 @@ def LIFensembles(input_rate,input_flag=True):
             Pg = NeuronGroup(exneuron, 'vi = ta(t) : 1', threshold='vi > 0.5', reset='v = 0', refractory=10 * ms)
         weg = (60 * 0.27 / 10) * mV
         Ceg = Synapses(Pg, P, on_pre='ge += we')
-        Ceg.connect('i<exneuron', p=0.02)
+        Ceg.connect('i<exneuron', p=0.002)
         pp_mon = PopulationRateMonitor(Pg)
-
 
     run(duration)
 
@@ -83,7 +139,7 @@ def LIFensembles(input_rate,input_flag=True):
         subplot(313)
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='5ms')
         #plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
-        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=5*ms)/Hz, label='10ms')
+        plot(p_mon.t/ms, p_mon.smooth_rate(window='gaussian', width=10*ms)/Hz, label='10ms')
         xlabel("Time (ms)")
         ylabel('Output Rate [Hz]')
     else:
@@ -98,6 +154,8 @@ def LIFensembles(input_rate,input_flag=True):
         legend()
         xlabel("Time (ms)")
         ylabel('Output Rate [Hz]')
+
+
 
 
 def input_firing_rate2discrete_spike(input_rate, neuron_num=1,display=False):
@@ -138,15 +196,16 @@ def draw_attractor(output):
     plt.plot(output[:-1],output[1:])
 
 if __name__=="__main__":
-    volt = 50
+    volt = 40
     input = np.sin(np.array(range(3000))*0.01)
     _input = [0 for i in range(100)] + [volt for i in range(200)] + [0 for i in range(100)] + [volt for i in range(200)]
     # _input = [0 for i in range(200)] + [volt for i in range(400)]
     #output = echo_state_neuron(input)
     #draw_attractor(output)
     #_input = (np.sin(np.array(range(1000))*0.01) + 1.1) * 10
-    spikes = input_firing_rate2discrete_spike(_input, 800)
-    LIFensembles(_input)
+    spikes = input_firing_rate2discrete_spike(_input, neuron_num)
+    #LIFensembles(_input)
     # echo_out = echo_state_neuron(np.array(_input)/volt)
     # draw_output(echo_out)
-    plt.show()
+    #plt.show()
+    experiment()

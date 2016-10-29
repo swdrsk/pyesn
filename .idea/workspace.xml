@@ -23,8 +23,8 @@
       <file leaf-file-name="run_pyESN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/run_pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="453">
+              <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -33,8 +33,8 @@
       <file leaf-file-name="ensemble_neurons.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+            <state relative-caret-position="595">
+              <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -89,8 +89,18 @@
       <file leaf-file-name="test_pyESN_mackeyglass.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+            <state relative-caret-position="544">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="generate_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/echo_state_network/tools/generate_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="686">
+              <caret line="71" column="18" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -99,8 +109,8 @@
       <file leaf-file-name="test_pyESN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1020">
-              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+            <state relative-caret-position="408">
+              <caret line="86" column="34" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -109,8 +119,8 @@
       <file leaf-file-name="pyESN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3213">
-              <caret line="198" column="107" selection-start-line="198" selection-start-column="107" selection-end-line="198" selection-end-column="107" />
+            <state relative-caret-position="4023">
+              <caret line="237" column="27" selection-start-line="237" selection-start-column="27" selection-end-line="237" selection-end-column="27" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -131,21 +141,20 @@
         <option value="$PROJECT_DIR$/motion_task/arm.py" />
         <option value="$PROJECT_DIR$/motion_task/Arm3Link.py" />
         <option value="$PROJECT_DIR$/../personal/chaos_attractor.py" />
-        <option value="$PROJECT_DIR$/echo_state_network/tools/generate_data.py" />
         <option value="$PROJECT_DIR$/networks/reservior.py" />
         <option value="$PROJECT_DIR$/spike_neurons/spiking.py" />
-        <option value="$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py" />
         <option value="$PROJECT_DIR$/echo_state_network/test_pyESN.py" />
         <option value="$PROJECT_DIR$/motion_task/Arm2Link.py" />
         <option value="$PROJECT_DIR$/echo_state_network/pyESN.py" />
         <option value="$PROJECT_DIR$/echo_state_network/run_pyESN.py" />
+        <option value="$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py" />
+        <option value="$PROJECT_DIR$/echo_state_network/tools/generate_data.py" />
         <option value="$PROJECT_DIR$/echo_state_network/ensemble_neurons.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
-    <option name="y" value="-8" />
+    <option name="x" value="56" />
     <option name="width" value="1874" />
     <option name="height" value="1084" />
   </component>
@@ -359,7 +368,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="1874" height="1084" extended-state="0" />
+    <frame x="56" y="0" width="1874" height="1084" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -709,13 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/tools/generate_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="601">
-          <caret line="138" column="1" selection-start-line="138" selection-start-column="1" selection-end-line="138" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/networks/networks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -740,27 +742,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN.py">
+    <entry file="file://$PROJECT_DIR$/echo_state_network/run_pyESN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1020">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+        <state relative-caret-position="453">
+          <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
+    <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/complexity.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="4023">
+          <caret line="237" column="27" selection-start-line="237" selection-start-column="27" selection-end-line="237" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,31 +768,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/motion_task/Arm2Link.py">
+    <entry file="file://$PROJECT_DIR$/networks/complexity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="99" column="29" selection-start-line="99" selection-start-column="29" selection-end-line="99" selection-end-column="29" />
-          <folding>
-            <element signature="e#15#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/run_pyESN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/echo_state_network/pyESN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3213">
-          <caret line="198" column="107" selection-start-line="198" selection-start-column="107" selection-end-line="198" selection-end-column="107" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -810,10 +786,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/motion_task/Arm2Link.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="99" column="29" selection-start-line="99" selection-start-column="29" selection-end-line="99" selection-end-column="29" />
+          <folding>
+            <element signature="e#15#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="86" column="34" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/echo_state_network/test_pyESN_mackeyglass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/echo_state_network/tools/generate_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="686">
+          <caret line="71" column="18" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/echo_state_network/ensemble_neurons.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+        <state relative-caret-position="595">
+          <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

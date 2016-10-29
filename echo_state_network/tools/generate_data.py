@@ -69,9 +69,9 @@ def Macky_glass(num,filename = "macky_glass.csv",display=False):
         plt.plot(range(N+tau-100),y[100:N+tau])
         plt.figure()
         plt.plot(y[100:N+tau-1],y[101:N+tau])        
-        plt.show()   
+        plt.show()
 
-
+        
 def long_short_wave(num,filename="longshortwave5.txt",display=False):
     N = num
     pi = np.pi

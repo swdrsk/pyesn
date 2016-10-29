@@ -224,7 +224,7 @@ class ESN():
         if not self.silent: print(np.sqrt(np.mean((pred_train - outputs)**2)))
         return pred_train
 
-    def predict(self,inputs,continuation=True):
+    def predict(self,inputs,continuation=True,inspect=False):
         """
         Apply the learned weights to the network's reactions to new input.
 
@@ -256,6 +256,14 @@ class ESN():
             states[n+1,:] = self._update(states[n,:],inputs[n+1,:],outputs[n,:])
             outputs[n+1,:] = self.out_activation(np.dot(self.W_out,
                                     np.concatenate([states[n+1,:],inputs[n+1,:]])))
+        if inspect:
+            inspect_time=400
+            plt.figure()
+            plt.plot(inputs[:inspect_time])
+            plt.plot(outputs[:inspect_time])
+            for i in range(3):
+                plt.plot(states[:inspect_time,i])
+
 
         self.reservoir_state = states
         return self._unscale_teacher(self.out_activation(outputs[1:]))

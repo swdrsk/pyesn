@@ -92,25 +92,25 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
 
     #esn = ESN(**params)
     esn = ESN(n_inputs = 1,
-              n_outputs = 2,
+              n_outputs = 1,
               n_reservoir = 300,
-              spectral_radius = 1.5,
+              spectral_radius = 0.99,
               noise = 0,#0.001,
               input_shift = 0,
-              input_scaling = 3,
-              teacher_scaling = 1.12,
-              teacher_shift = -0.7,
+              # input_scaling = 3,
+              # teacher_scaling = 1.35, #1.12,
+              # teacher_shift = -0.9, # -0.7,
               out_activation = np.tanh,
               inverse_out_activation = np.arctanh,
               silent = False)
 
-    pred_train = esn.fit(train_ctrl, train_output, inspect=True)
+    pred_train = esn.fit(train_ctrl, train_output, inspect=False)
 
     reservoir_state = esn.get_reservoir_states()
     pca = sklearn.decomposition.PCA(3)
     pca.fit(reservoir_state)
     pcaindex = pca.transform(reservoir_state)
-    pred_test = esn.predict(test_ctrl)
+    pred_test = esn.predict(test_ctrl,inspect=True)
     reservoir_state = esn.get_reservoir_states()
     pcaindex_pred = pca.transform(reservoir_state)
 
@@ -125,25 +125,45 @@ def run_pyESN(inputfile, outputfolder, parameter, drawflag=False):
         ax.set_zlabel('PC3')
     if drawflag:
         window_tr = range(len(train_output)/4,len(train_output)/4+2000)
-        plt.figure(figsize=(12, 4))
-        plt.subplot(211)
-        if n_input!=0:
-            plt.plot(train_ctrl[window_tr],label='control')
-
-        plt.plot(train_output[window_tr],label='target')
-        plt.plot(pred_train[window_tr],label='model')
-        plt.legend(fontsize='x-small')
-        plt.title('training (excerpt)')
-        window_test = range(2000)
-        plt.subplot(212)
-        if n_input!=0:
-            plt.plot(test_ctrl[window_test],label='control')
-        plt.plot(test_output[window_test],label='target')
-        plt.plot(pred_test[window_test],label='model')
-        plt.legend(fontsize='x-small')
-        plt.title('test (excerpt)')
-        plt.show()
-
+        if n_output<2:
+            plt.figure(figsize=(12, 4))
+            plt.subplot(211)
+            if n_input!=0:
+                plt.plot(train_ctrl[window_tr],label='control')
+            if n_output<2:
+                plt.plot(train_output[window_tr],label='target')
+                plt.plot(pred_train[window_tr],label='model')
+                plt.legend(fontsize='x-small')
+                plt.title('training (excerpt)')
+            window_test = range(2000)
+            plt.subplot(212)
+            if n_input!=0:
+                plt.plot(test_ctrl[window_test],label='control')
+            plt.plot(test_output[window_test],label='target')
+            plt.plot(pred_test[window_test],label='model')
+            plt.legend(fontsize='x-small')
+            plt.title('test (excerpt)')
+            plt.show()
+        else:
+            for wo in range(n_output):
+                plt.figure(figsize=(12, 4))
+                plt.subplot(211)
+                if n_input != 0:
+                    plt.plot(train_ctrl[window_tr], label='control')
+                if n_output < 2:
+                    plt.plot(train_output[window_tr, wo], label='target')
+                    plt.plot(pred_train[window_tr, wo], label='model')
+                    plt.legend(fontsize='x-small')
+                    plt.title('training (excerpt)')
+                window_test = range(300)
+                plt.subplot(212)
+                if n_input != 0:
+                    plt.plot(test_ctrl[window_test], label='control')
+                plt.plot(test_output[window_test, wo], label='target')
+                plt.plot(pred_test[window_test, wo], label='model')
+                plt.legend(fontsize='x-small')
+                plt.title('test (excerpt)')
+            plt.show()
 
 
 if __name__=="__main__":
