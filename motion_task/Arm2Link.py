@@ -100,7 +100,7 @@ arm = ArmOrbit(L=[100,100])
 step_angle = np.arange(0, 1000*np.pi, 0.05*np.pi)
 #orbit = [[110+30*np.sin(i) for i in step_angle],[110+30*np.cos(i) for i in step_angle]]
 step_rect = range(0,60,2)
-orbit = 
+orbit =
 arm.set_orbit(zip(*orbit))
 arm.save_orbit(filename)
 fig = plt.figure()

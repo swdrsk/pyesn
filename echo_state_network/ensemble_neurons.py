@@ -59,6 +59,7 @@ def LIFensemble_exp(hz):
     out_hz = np.average(pp_mon.smooth_rate(window="gaussian", width=10 * ms))
     return out_hz
 
+
 def experiment():
     filename = "../result/LIF_neuron.csv"
     f = open(filename, "w")
@@ -70,6 +71,12 @@ def experiment():
     f.close()
     plt.plot(ctrl_hz, out_hz)
     plt.scatter(ctrl_hz, out_hz, color="r")
+    plt.ylim(0,max(out_hz)+10)
+    plt.xlim(0,max(ctrl_hz)+10)
+    plt.title('relation between input and output')
+    plt.ylabel('post neurons [Hz]')
+    plt.xlabel('pre neurons [Hz]')
+    plt.savefig('../result/LIF_neurons.png')
     plt.show()
 
 
@@ -203,8 +210,9 @@ if __name__=="__main__":
     #output = echo_state_neuron(input)
     #draw_attractor(output)
     #_input = (np.sin(np.array(range(1000))*0.01) + 1.1) * 10
-    spikes = input_firing_rate2discrete_spike(_input, neuron_num)
-    LIFensembles(_input)
-    echo_out = echo_state_neuron(np.array(_input)/volt)
-    draw_output(echo_out)
-    plt.show()
+    #spikes = input_firing_rate2discrete_spike(_input, neuron_num)
+    #LIFensembles(_input)
+    #echo_out = echo_state_neuron(np.array(_input)/volt)
+    #draw_output(echo_out)
+    #plt.show()
+    experiment()
