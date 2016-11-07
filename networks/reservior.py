@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
-
+from time_correlation import tec,mic
 
 class Network(object):
     def __init__(self,
@@ -71,6 +71,15 @@ class Network(object):
         plt.xlabel("time[step]")
         if not figname=="":
             plt.savefig(figname)
+
+    def network_analysis(self):
+        connectivity = np.zeros([self.N,self.N])
+        for i in range(self.N):
+            for j in range(i):
+                mutual_info = mic(list(self.reservoir[:,i]),
+                                  list(self.reservoir[:.j]))
+                connectivity[i,j] = mutual_info
+                connectivity[j,i] = mutual_info
 
     def draw_reservoir(self, filename=None):
         if not filename:
