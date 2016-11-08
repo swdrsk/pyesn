@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
-from time_correlation import tec,mic
+from time_correlation import tec,npmic
 
 class Network(object):
     def __init__(self,
@@ -72,14 +72,16 @@ class Network(object):
         if not figname=="":
             plt.savefig(figname)
 
-    def network_analysis(self):
-        connectivity = np.zeros([self.N,self.N])
-        for i in range(self.N):
+    def network_analysis(self,areas):
+        connectivity = np.zeros([areas, areas])
+        for i in range(areas):
             for j in range(i):
-                mutual_info = mic(list(self.reservoir[:,i]),
-                                  list(self.reservoir[:.j]))
-                connectivity[i,j] = mutual_info
-                connectivity[j,i] = mutual_info
+                # mutual_info = npmic(self.reservoir[:,i], self.reservoir[:,j])
+                connectivity[i,j] = tec(self.reservoir[:,j], self.reservoir[:,i])
+                connectivity[j,i] = tec(self.reservoir[:,i], self.reservoir[:,j])
+        plt.imshow(connectivity)
+        plt.colorbar()
+        return connectivity
 
     def draw_reservoir(self, filename=None):
         if not filename:
@@ -197,7 +199,7 @@ def sparsity_experiment():
     plt.show()
 
 
-def variety_radius():
+def variety_radius_experiment():
     radiuses = [0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7]
     plt.figure(figsize=[20,20])
     filename = "../data/inpulse.txt"
@@ -213,21 +215,44 @@ def variety_radius():
 
 
 def demo():
-    #nw = Network(n=300, leaky_rate=0, radius=1.6, sparsity=0.9)
-    nw = NoisyNetwok(n=300, leaky_rate=0.8, radius=0.8, sparsity=0.9)
+    N = 300
+    var = 0.8
+    leaky_rate = np.random.random(N) * var + (0.999 - var)
+    # nw = Network(n=N, leaky_rate=leaky_rate, radius=0.8, sparsity=0.9)
+    nw = NoisyNetwok(n=N, leaky_rate=0.9, radius=1.0, sparsity=0.9)
     # nw = ReLUNetwork(n = 300, leaky_rate=0.9, radius=1.0, random_state=None)
     # nw = SigmoidNetwork(n = 300, leaky_rate=0.9, radius=13, random_state=None)
     # nw = HermansNetwork(n=300, leaky_rate=0.9, radius=0.9)
     filename = "../data/inpulse.txt"
     # filename = "../data/continuous.txt"
     inputsignal = pd.read_csv(filename)["input"]
-    inputsignal = pd.read_csv('../data/sinwave.txt')['output']
+    #inputsignal = pd.read_csv('../data/sinwave.txt')['output']
     inputsignal = pd.read_csv('../data/macky_glass.csv')['output']
     nw.run(inputsignal)
     # print "\rconvergence_time: [%d]"%convergence_time(nw.get_reservoir_state(),start=3100)
     nw.plot_reservoir(cutoff=[2900, 4000],nums=10)
     plt.show()
 
+
+def demo2():
+    N = 1000
+    var = 0.5
+    leaky_rate = np.random.random(N) * var + (0.999 - var)
+    # nw = Network(n=N, leaky_rate=leaky_rate, radius=0.8, sparsity=0.9)
+    nw = NoisyNetwok(n=N, leaky_rate=leaky_rate, radius=1.0, sparsity=0.1, random_state=None)
+    filename = "../data/inpulse.txt"
+    #filename = "../data/continuous.txt"
+    inputsignal = pd.read_csv(filename)["input"]
+    # inputsignal = pd.read_csv('../data/sinwave.txt')['output']
+    #inputsignal = pd.read_csv('../data/macky_glass.csv')['output']
+    nw.run(inputsignal)
+    plt.figure()
+    nw.network_analysis(20)
+    plt.figure()
+    nw.plot_reservoir(cutoff=[2900, 4000],nums=10)
+    plt.show()
+
+
 if __name__=="__main__":
-    demo()
+    demo2()
 
